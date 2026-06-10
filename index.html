@@ -1,36 +1,1038 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foozi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foozi — Simplifique a gestão de compras do seu restaurante</title>
+  <meta name="description" content="Plataforma e BPO de compras para restaurantes, hotéis, padarias e supermercados. Digitalize cotações, compare fornecedores em segundos e compre com mais tecnologia e lucro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: #0f172a;
-      color: #f8fafc;
+    /* ════════════════════════════════════════
+       TOKENS + BRAND — Foozi
+    ════════════════════════════════════════ */
+    :root {
+      --color-primary:        #5041C3;
+      --color-primary-hover:  #5E50DC;
+      --color-primary-light:  #CBD3FB;
+      --color-secondary:      #1D2433;
+      --color-accent:         #2BFD9E;
+
+      --color-text-strong:    #1D2433;
+      --color-text-body:      #4A5066;
+      --color-text-muted:     #7A8099;
+      --color-text-subtle:    #AEB4CC;
+      --color-text-inverse:   #FFFFFF;
+
+      --color-background:     #FFFFFF;
+      --color-background-alt: #F4F5FD;
+      --color-background-dark:#1D2433;
+
+      --color-border:         #E6E8F7;
+      --color-border-strong:  #CBD3FB;
+
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body:    'Space Grotesk', system-ui, sans-serif;
+
+      --font-size-xs:   0.75rem;
+      --font-size-sm:   0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg:   1.125rem;
+      --font-size-xl:   1.25rem;
+      --font-size-2xl:  1.5rem;
+      --font-size-3xl:  2rem;
+      --font-size-4xl:  2.5rem;
+      --font-size-5xl:  3rem;
+      --font-size-6xl:  4rem;
+
+      --font-weight-regular:  400;
+      --font-weight-medium:   500;
+      --font-weight-semibold: 600;
+      --font-weight-bold:     700;
+
+      --line-height-tight:   1.1;
+      --line-height-snug:    1.3;
+      --line-height-normal:  1.5;
+      --line-height-relaxed: 1.7;
+
+      --letter-spacing-tight:  -0.02em;
+      --letter-spacing-wide:    0.05em;
+      --letter-spacing-wider:   0.1em;
+
+      --space-xs:  0.25rem;
+      --space-sm:  0.5rem;
+      --space-md:  1rem;
+      --space-lg:  1.5rem;
+      --space-xl:  2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --space-5xl: 8rem;
+
+      --container-max:     1200px;
+      --container-padding: var(--space-lg);
+
+      --radius-sm:   0.25rem;
+      --radius-md:   0.5rem;
+      --radius-lg:   0.75rem;
+      --radius-xl:   1rem;
+      --radius-2xl:  1.5rem;
+      --radius-full: 9999px;
+
+      --shadow-sm:  0 1px 3px rgba(29,36,51,0.08), 0 1px 2px rgba(29,36,51,0.05);
+      --shadow-md:  0 8px 24px -8px rgba(80,65,195,0.25);
     }
-    main {
-      text-align: center;
+
+    /* ════════════════════════════════════════
+       RESET
+    ════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { color: var(--color-text-body); background: var(--color-background); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { border: 0; background: transparent; cursor: pointer; font: inherit; }
+    ul, ol { list-style: none; }
+    .container { width: min(1200px, calc(100% - 48px)); margin: 0 auto; }
+
+    /* ════════════════════════════════════════
+       BUTTONS (atom)
+    ════════════════════════════════════════ */
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: var(--space-sm);
+      font-family: var(--font-body); font-weight: var(--font-weight-bold); line-height: 1;
+      text-decoration: none; white-space: nowrap; cursor: pointer;
+      border: 2px solid transparent;
+      transition: background-color .15s ease, border-color .15s ease, color .15s ease, opacity .15s ease, transform .15s ease;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+    .button--lg { min-height: 56px; padding-inline: var(--space-xl); font-size: var(--font-size-lg); border-radius: var(--radius-xl); }
+    .button--md { min-height: 48px; padding-inline: var(--space-lg); font-size: var(--font-size-base); border-radius: var(--radius-lg); }
+    .button--sm { min-height: 40px; padding-inline: var(--space-md); font-size: var(--font-size-sm); border-radius: var(--radius-md); }
+    .button__icon { flex-shrink: 0; pointer-events: none; width: 18px; height: 18px; }
+    .button--filled { background-color: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+    .button--filled:hover { background-color: var(--color-primary-hover); border-color: var(--color-primary-hover); transform: translateY(-1px); }
+    .button--outline { background-color: transparent; color: var(--color-text-strong); border-color: var(--color-border-strong); }
+    .button--outline:hover { background-color: var(--color-background-alt); border-color: var(--color-text-strong); }
+    .button--filled.button--inverse { background-color: var(--color-text-inverse); color: var(--color-primary); border-color: var(--color-text-inverse); }
+    .button--filled.button--inverse:hover { opacity: .9; }
+    .button--outline.button--inverse { color: var(--color-text-inverse); border-color: rgba(255,255,255,.5); }
+    .button--outline.button--inverse:hover { background-color: rgba(255,255,255,.1); border-color: #fff; }
+    .button--accent { background-color: var(--color-accent); color: var(--color-text-strong); border-color: var(--color-accent); }
+    .button--accent:hover { opacity: .85; transform: translateY(-1px); }
+
+    /* ════════════════════════════════════════
+       SECTION HEADING (compartilhado)
+    ════════════════════════════════════════ */
+    .section-eyebrow {
+      display: inline-flex; align-items: center;
+      padding: 4px var(--space-md);
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+      border-radius: 9999px;
+      font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--letter-spacing-wide); text-transform: uppercase;
+      margin-block-end: var(--space-md);
     }
-    p {
-      color: #94a3b8;
+    .section-heading { text-align: center; max-width: 56ch; margin-inline: auto; margin-block-end: var(--space-3xl); }
+    .section-heading__title {
+      font-family: var(--font-heading);
+      font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
+      font-weight: var(--font-weight-bold); line-height: var(--line-height-tight);
+      color: var(--color-text-strong); letter-spacing: var(--letter-spacing-tight);
+      margin-block-end: var(--space-md);
+    }
+    .section-heading__desc { font-size: var(--font-size-base); line-height: var(--line-height-relaxed); color: var(--color-text-muted); }
+
+    /* ════════════════════════════════════════
+       1. HEADER SIMPLE
+    ════════════════════════════════════════ */
+    .header-simple { position: sticky; top: 0; z-index: 100; background-color: var(--color-background); border-bottom: 1px solid var(--color-border); }
+    .header-simple__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); height: 76px; }
+    .header-simple__logo { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .header-simple__logo svg { display: block; height: 28px; width: auto; }
+    .header-simple__nav { display: none; }
+    .header-simple__list { display: flex; align-items: center; gap: 2px; }
+    .header-simple__link {
+      display: inline-flex; align-items: center; padding: var(--space-xs) var(--space-md);
+      font-size: var(--font-size-sm); font-weight: var(--font-weight-medium);
+      color: var(--color-text-body); border-radius: var(--radius-md);
+      transition: color .15s ease, background-color .15s ease;
+    }
+    .header-simple__link:hover { color: var(--color-text-strong); background-color: var(--color-background-alt); }
+    .header-simple__actions { display: flex; align-items: center; gap: var(--space-sm); flex-shrink: 0; }
+    .header-simple__cta-wrap { display: none; }
+    .header-simple__toggle {
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+      width: 40px; height: 40px; border-radius: var(--radius-md);
+    }
+    .header-simple__toggle-bar { display: block; width: 22px; height: 2px; background-color: var(--color-text-strong); border-radius: 9999px; transition: transform .22s ease, opacity .22s ease; }
+    .header-simple__toggle[aria-expanded="true"] .header-simple__toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .header-simple__toggle[aria-expanded="true"] .header-simple__toggle-bar:nth-child(2) { opacity: 0; }
+    .header-simple__toggle[aria-expanded="true"] .header-simple__toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .header-simple__mobile-panel { display: none; border-top: 1px solid var(--color-border); padding: var(--space-lg) 0; }
+    .header-simple__mobile-panel--open { display: block; }
+    .header-simple__mobile-list { display: flex; flex-direction: column; gap: 2px; margin-block-end: var(--space-lg); }
+    .header-simple__mobile-link { display: block; padding: var(--space-sm) var(--space-md); font-size: var(--font-size-base); font-weight: var(--font-weight-medium); color: var(--color-text-body); border-radius: var(--radius-md); }
+    .header-simple__mobile-link:hover { background-color: var(--color-background-alt); }
+    .header-simple__mobile-actions { display: flex; flex-direction: column; gap: var(--space-sm); padding-top: var(--space-lg); border-top: 1px solid var(--color-border); }
+    @media (min-width: 1024px) {
+      .header-simple__nav { display: flex; flex: 1; justify-content: center; }
+      .header-simple__cta-wrap { display: flex; }
+      .header-simple__toggle { display: none; }
+      .header-simple__mobile-panel, .header-simple__mobile-panel--open { display: none; }
+    }
+
+    /* ════════════════════════════════════════
+       2. HERO
+    ════════════════════════════════════════ */
+    .hero {
+      position: relative; overflow: hidden;
+      background-color: var(--color-primary-light);
+      padding-block: var(--space-4xl);
+    }
+    .hero::before, .hero::after {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(90px);
+    }
+    .hero::before { width: 420px; height: 420px; top: -180px; right: -120px; background: var(--color-primary); opacity: .35; }
+    .hero::after { width: 320px; height: 320px; bottom: -160px; left: -80px; background: var(--color-accent); opacity: .35; }
+    .hero__inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: var(--space-lg); max-width: 760px; margin-inline: auto;
+    }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: var(--space-sm);
+      padding: 6px var(--space-md); border-radius: 9999px;
+      background: var(--color-background); border: 1px solid rgba(80,65,195,.15);
+      color: var(--color-primary); font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase;
+    }
+    .hero__title {
+      font-family: var(--font-heading);
+      font-size: clamp(var(--font-size-3xl), 6vw, var(--font-size-6xl));
+      font-weight: var(--font-weight-bold); line-height: var(--line-height-tight);
+      letter-spacing: var(--letter-spacing-tight);
+      color: var(--color-text-strong);
+    }
+    .hero__title em { font-style: normal; color: var(--color-primary); }
+    .hero__desc { font-size: var(--font-size-lg); line-height: var(--line-height-relaxed); color: var(--color-text-body); max-width: 56ch; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); justify-content: center; margin-block-start: var(--space-sm); }
+
+    /* ════════════════════════════════════════
+       3. STATS (Nossos Clientes)
+    ════════════════════════════════════════ */
+    .stats { padding-block: var(--space-4xl); background-color: var(--color-background); }
+    .stats__header { text-align: center; max-width: 56ch; margin-inline: auto; margin-block-end: var(--space-2xl); }
+    .stats__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
+    .stat-card {
+      background-color: var(--color-background-dark); border-radius: var(--radius-xl);
+      padding: var(--space-2xl); text-align: center;
+      display: flex; flex-direction: column; gap: var(--space-xs);
+    }
+    .stat-card__number {
+      font-family: var(--font-heading); font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-5xl));
+      font-weight: var(--font-weight-bold); color: var(--color-accent); line-height: var(--line-height-tight);
+    }
+    .stat-card__label { font-size: var(--font-size-sm); color: rgba(255,255,255,.7); line-height: var(--line-height-relaxed); }
+    @media (min-width: 768px) { .stats__grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ════════════════════════════════════════
+       4. FEATURES (split rows alternados)
+    ════════════════════════════════════════ */
+    .features { padding-block: var(--space-4xl); background-color: var(--color-background-alt); }
+    .feature-row {
+      display: grid; grid-template-columns: 1fr; gap: var(--space-xl); align-items: center;
+      padding-block: var(--space-2xl);
+    }
+    .feature-row:not(:last-child) { border-bottom: 1px solid var(--color-border); }
+    .feature-row__media { aspect-ratio: 4 / 3; border-radius: var(--radius-xl); overflow: hidden; background-color: var(--color-primary-light); }
+    .feature-row__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .feature-row__content { display: flex; flex-direction: column; gap: var(--space-md); }
+    .feature-row__icon {
+      width: 48px; height: 48px; border-radius: var(--radius-lg);
+      background-color: var(--color-primary-light); color: var(--color-primary);
+      display: inline-grid; place-items: center;
+    }
+    .feature-row__icon svg { width: 24px; height: 24px; }
+    .feature-row__title {
+      font-family: var(--font-heading); font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold);
+      color: var(--color-text-strong); line-height: var(--line-height-tight);
+    }
+    .feature-row__desc { font-size: var(--font-size-base); line-height: var(--line-height-relaxed); color: var(--color-text-body); }
+    @media (min-width: 900px) {
+      .feature-row { grid-template-columns: repeat(2, 1fr); gap: var(--space-3xl); }
+      .feature-row--reverse .feature-row__media { order: 2; }
+      .feature-row--reverse .feature-row__content { order: 1; }
+    }
+
+    /* ════════════════════════════════════════
+       5. DIFERENCIAIS (banda escura, ícones)
+    ════════════════════════════════════════ */
+    .differentials { padding-block: var(--space-4xl); background-color: var(--color-background-dark); }
+    .differentials .section-heading__title { color: var(--color-text-inverse); }
+    .differentials .section-heading__desc { color: rgba(255,255,255,.6); }
+    .differentials .section-eyebrow { background-color: rgba(43,253,158,.12); color: var(--color-accent); }
+    .differentials__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
+    .differential-card {
+      background-color: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-xl); padding: var(--space-xl);
+      display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start;
+    }
+    .differential-card__icon {
+      width: 48px; height: 48px; border-radius: var(--radius-full);
+      background-color: var(--color-accent); color: var(--color-text-strong);
+      display: inline-grid; place-items: center;
+    }
+    .differential-card__icon svg { width: 22px; height: 22px; }
+    .differential-card__title { font-size: var(--font-size-base); font-weight: var(--font-weight-bold); color: var(--color-text-inverse); line-height: var(--line-height-snug); }
+    @media (min-width: 768px) { .differentials__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .differentials__grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-xl); } }
+
+    /* ════════════════════════════════════════
+       6. POR QUE A FOOZI (cards com ícone)
+    ════════════════════════════════════════ */
+    .why { padding-block: var(--space-4xl); background-color: var(--color-background); }
+    .why__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
+    .why-card {
+      background-color: var(--color-background-alt); border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl); padding: var(--space-xl);
+      display: flex; flex-direction: column; gap: var(--space-md);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .why-card__icon {
+      width: 48px; height: 48px; border-radius: var(--radius-lg);
+      background-color: var(--color-primary); color: var(--color-text-inverse);
+      display: inline-grid; place-items: center;
+    }
+    .why-card__icon svg { width: 24px; height: 24px; }
+    .why-card__title { font-family: var(--font-heading); font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text-strong); }
+    .why-card__desc { font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); color: var(--color-text-body); }
+    @media (min-width: 640px) { .why__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); } }
+
+    /* ════════════════════════════════════════
+       7. TESTEMUNHOS
+    ════════════════════════════════════════ */
+    .testimonials { padding-block: var(--space-4xl); background-color: var(--color-background-alt); }
+    .testimonials__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
+    .testimonial-card {
+      background-color: var(--color-background); border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl); padding: var(--space-xl);
+      display: flex; flex-direction: column; gap: var(--space-md);
+    }
+    .testimonial-card__quote { width: 30px; height: 30px; color: var(--color-primary-light); }
+    .testimonial-card__text { font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); color: var(--color-text-body); flex: 1; }
+    .testimonial-card__author { display: flex; flex-direction: column; gap: 2px; padding-block-start: var(--space-md); border-top: 1px solid var(--color-border); }
+    .testimonial-card__name { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-text-strong); }
+    .testimonial-card__role { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+    @media (min-width: 640px) { .testimonials__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .testimonials__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); } }
+
+    /* ════════════════════════════════════════
+       8. FAQ (accordion nativo)
+    ════════════════════════════════════════ */
+    .faq { padding-block: var(--space-4xl); background-color: var(--color-background); }
+    .faq__list { display: flex; flex-direction: column; gap: var(--space-md); max-width: 840px; margin-inline: auto; }
+    .faq-item { background-color: var(--color-background-alt); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding-inline: var(--space-lg); }
+    .faq-item__trigger {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
+      padding-block: var(--space-md); cursor: pointer; list-style: none;
+      font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-strong);
+    }
+    .faq-item__trigger::-webkit-details-marker { display: none; }
+    .faq-item__icon { flex-shrink: 0; width: 24px; height: 24px; display: grid; place-items: center; color: var(--color-primary); }
+    .faq-item__icon svg { width: 20px; height: 20px; }
+    .faq-item__icon .icon-plus__v { transition: opacity .2s ease, transform .2s ease; transform-origin: 12px 12px; }
+    .faq-item[open] .faq-item__icon .icon-plus__v { opacity: 0; transform: rotate(90deg); }
+    .faq-item__panel { padding-block-end: var(--space-lg); font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); color: var(--color-text-body); }
+
+    /* ════════════════════════════════════════
+       9. NEWSLETTER
+    ════════════════════════════════════════ */
+    .newsletter { padding-block: var(--space-3xl); background-color: var(--color-primary); }
+    .newsletter__inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-lg); max-width: 640px; margin-inline: auto; }
+    .newsletter__title { font-family: var(--font-heading); font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-text-inverse); }
+    .newsletter__desc { font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); color: rgba(255,255,255,.8); }
+    .newsletter__form { display: flex; flex-direction: column; gap: var(--space-sm); width: 100%; max-width: 440px; }
+    .newsletter__input {
+      flex: 1; min-height: 48px; padding-inline: var(--space-md); border-radius: var(--radius-lg);
+      border: 1px solid transparent; font-size: var(--font-size-base); font-family: var(--font-body);
+      color: var(--color-text-strong); background-color: var(--color-text-inverse);
+    }
+    .newsletter__input::placeholder { color: var(--color-text-muted); }
+    .newsletter__input:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+    @media (min-width: 640px) { .newsletter__form { flex-direction: row; } }
+
+    /* ════════════════════════════════════════
+       10. FOOTER
+    ════════════════════════════════════════ */
+    .footer { background-color: var(--color-background); border-top: 1px solid var(--color-border); }
+    .footer__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-3xl); padding-block: var(--space-3xl); }
+    .footer__brand { display: flex; flex-direction: column; gap: var(--space-md); }
+    .footer__logo { display: inline-flex; align-items: center; gap: 10px; }
+    .footer__logo svg { display: block; height: 28px; width: auto; }
+    .footer__description { font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); color: var(--color-text-muted); max-width: 38ch; }
+    .footer__social { display: flex; gap: var(--space-md); margin-block-start: var(--space-xs); }
+    .footer__social a { color: var(--color-text-muted); transition: color .15s ease; }
+    .footer__social a:hover { color: var(--color-primary); }
+    .footer__links { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--space-xl) var(--space-2xl); align-items: start; }
+    .footer__group-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-strong); margin-block-end: var(--space-md); }
+    .footer__group-list { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .footer__group-link { font-size: var(--font-size-sm); color: var(--color-text-muted); transition: color .15s ease; }
+    .footer__group-link:hover { color: var(--color-text-strong); }
+    .footer__group-text { font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); color: var(--color-text-muted); }
+    .footer__divider { border: none; border-top: 1px solid var(--color-border); }
+    .footer__bottom { padding-block: var(--space-md); }
+    .footer__bottom-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); flex-wrap: wrap; }
+    .footer__copyright { font-size: var(--font-size-xs); color: var(--color-text-muted); line-height: var(--line-height-relaxed); max-width: 70ch; }
+    .footer__bottom-links { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
+    .footer__bottom-link { font-size: var(--font-size-xs); color: var(--color-text-muted); transition: color .15s ease; }
+    .footer__bottom-link:hover { color: var(--color-text-strong); }
+    @media (min-width: 1024px) {
+      .footer__grid { grid-template-columns: minmax(220px,1fr) 2fr; gap: var(--space-4xl); }
+      .footer__links { grid-template-columns: repeat(3,1fr); }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Foozi</h1>
-    <p>Ambiente de landing pages</p>
-  </main>
+
+  <!-- ══════════ SVG SPRITE ══════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="20" x2="12" y2="10"/>
+      <line x1="18" y1="20" x2="18" y2="4"/>
+      <line x1="6" y1="20" x2="6" y2="16"/>
+    </symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.4 8.5 8.5 0 0 1-4-1L3 20l1.1-3.3A8.5 8.5 0 1 1 21 11.5Z"/>
+    </symbol>
+    <symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>
+    </symbol>
+    <symbol id="icon-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 7h13l-3-3"/>
+      <path d="M17 17H4l3 3"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 7v5l3 3"/>
+    </symbol>
+    <symbol id="icon-headset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 18v-4a9 9 0 0 1 18 0v4"/>
+      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5Z"/>
+      <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5Z"/>
+    </symbol>
+    <symbol id="icon-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.04-2.96a2.18 2.18 0 00-2.96-.04z"/>
+      <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+    </symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2 4 5v6c0 5.25 3.4 9.74 8 11 4.6-1.26 8-5.75 8-11V5l-8-3Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </symbol>
+    <symbol id="icon-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/>
+      <path d="M3 8l9 5 9-5"/>
+      <path d="M12 13v8"/>
+    </symbol>
+    <symbol id="icon-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z"/>
+    </symbol>
+    <symbol id="icon-trending-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 17 13.5 8.5l-5 5L2 6"/>
+      <path d="M16 17h6v-6"/>
+    </symbol>
+    <symbol id="icon-percent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="5" x2="5" y2="19"/>
+      <circle cx="6.5" cy="6.5" r="2.5"/>
+      <circle cx="17.5" cy="17.5" r="2.5"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8"/>
+    </symbol>
+    <symbol id="icon-quote" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9.5 7C6.5 8.2 5 10.3 5 13c0 .4.03.7.08 1A3 3 0 1 0 8 17.9c1.2-.4 2-1.5 2-2.9 0-1.5-1-2.7-2.4-3 .2-1.4 1-2.6 2.6-3.4L9.5 7Zm9 0C15.5 8.2 14 10.3 14 13c0 .4.03.7.08 1A3 3 0 1 0 17 17.9c1.2-.4 2-1.5 2-2.9 0-1.5-1-2.7-2.4-3 .2-1.4 1-2.6 2.6-3.4L18.5 7Z"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line class="icon-plus__h" x1="5" y1="12" x2="19" y2="12"/>
+      <line class="icon-plus__v" x1="12" y1="5" x2="12" y2="19"/>
+    </symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+      <circle cx="4" cy="4" r="2"/>
+    </symbol>
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.975-1.407A9.963 9.963 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.963 7.963 0 01-4.073-1.118l-.291-.174-3.022.855.855-3.022-.174-.291A7.963 7.963 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+    </symbol>
+  </svg>
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="header-simple">
+    <div class="container header-simple__bar">
+      <a href="#" class="header-simple__logo" aria-label="Foozi">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117 40" fill="none" aria-hidden="true" focusable="false">
+          <path d="M19.7824 5.00127C23.8381 4.94968 27.6489 6.47695 30.5308 9.31784V9.31744C33.4126 12.1591 35 15.953 35 19.9998C35 28.2711 28.2712 35 20.0001 35C14.8871 35 10.9703 31.9812 10.8062 31.8528L13.0857 29.3844C13.8733 29.9255 16.6629 31.6636 20.0005 31.6636C26.432 31.6636 31.664 26.431 31.664 19.9998C31.664 16.8531 30.4296 13.9033 28.1887 11.6936C25.9482 9.48479 22.9799 8.29465 19.8303 8.3373C13.619 8.42545 8.46455 13.5495 8.33986 19.759C8.30817 21.3398 8.59129 22.8891 9.16726 24.3298L13.7486 19.4198C15.6264 17.4075 18.2824 16.2531 21.0351 16.2531H26.4738V19.59H21.0351C19.204 19.59 17.4371 20.3577 16.1877 21.6965L8.53078 29.9023L7.37114 28.0968C5.76184 25.5914 4.94297 22.6851 5.00309 19.6923C5.08107 15.8067 6.65707 12.1433 9.44022 9.37674C12.2234 6.61019 15.8961 5.05651 19.7824 5.00127Z" fill="#8E93F2"/>
+          <path d="M16.1329 26.0837L19.2138 22.7469H23.9527V26.0837H16.1329Z" fill="#8E93F2"/>
+          <path d="M54.6579 11.68C52.4349 11.5073 51.3231 12.4253 51.3231 14.4339V14.5959H54.6579V18.6132H51.3231V30.7964H47.2647V18.6132H45V14.5959H47.2647V14.4339C47.2647 12.1444 47.8832 10.4059 49.121 9.21773C50.3581 8.02958 52.2039 7.51146 54.6572 7.66267V11.68H54.6579Z" fill="#1D2433"/>
+          <path d="M69.1917 28.7712C67.5762 30.4238 65.6051 31.25 63.2777 31.25C60.9504 31.25 58.9835 30.4238 57.3791 28.7712C55.7746 27.1187 54.9724 25.0936 54.9724 22.6965C54.9724 20.2994 55.7746 18.2736 57.3791 16.6211C58.9835 14.9685 60.9497 14.1423 63.2777 14.1423C65.6058 14.1423 67.5769 14.9685 69.1917 16.6211C70.8066 18.2736 71.6137 20.2987 71.6137 22.6965C71.6137 25.0943 70.8059 27.1195 69.1917 28.7712ZM60.2414 25.9034C61.0485 26.7461 62.0602 27.1675 63.277 27.1675C64.4939 27.1675 65.5104 26.7461 66.3287 25.9034C67.1469 25.0613 67.5553 23.9921 67.5553 22.6958C67.5553 21.3994 67.1462 20.3303 66.3287 19.4882C65.5111 18.6462 64.4932 18.2248 63.277 18.2248C62.0609 18.2248 61.0485 18.6462 60.2414 19.4882C59.4336 20.331 59.0301 21.4002 59.0301 22.6958C59.0301 23.9914 59.4336 25.0613 60.2414 25.9034Z" fill="#1D2433"/>
+          <path d="M87.7519 28.7712C86.1364 30.4238 84.1653 31.25 81.8379 31.25C79.5106 31.25 77.5437 30.4238 75.9393 28.7712C74.3348 27.1187 73.5326 25.0936 73.5326 22.6965C73.5326 20.2994 74.3348 18.2736 75.9393 16.6211C77.5437 14.9685 79.5099 14.1423 81.8379 14.1423C84.166 14.1423 86.1371 14.9685 87.7519 16.6211C89.3668 18.2736 90.1739 20.2987 90.1739 22.6965C90.1739 25.0943 89.3661 27.1195 87.7519 28.7712ZM78.8016 25.9034C79.6087 26.7461 80.6204 27.1675 81.8373 27.1675C83.0541 27.1675 84.0707 26.7461 84.8889 25.9034C85.7071 25.0613 86.1155 23.9921 86.1155 22.6958C86.1155 21.3994 85.7064 20.3303 84.8889 19.4882C84.0713 18.6462 83.0535 18.2248 81.8373 18.2248C80.6211 18.2248 79.6087 18.6462 78.8016 19.4882C77.9938 20.331 77.5903 21.4002 77.5903 22.6958C77.5903 23.9914 77.9938 25.0613 78.8016 25.9034Z" fill="#1D2433"/>
+          <path d="M96.8574 26.8758H103.841V30.7964H91.4381V28.0138L98.0701 18.5165H91.747V14.5959H103.533V17.3735L96.8574 26.8758Z" fill="#1D2433"/>
+          <path d="M108.734 12.6517C108.063 12.6517 107.481 12.3981 106.988 11.89C106.495 11.3826 106.25 10.7835 106.25 10.092C106.25 9.40046 106.496 8.79564 106.988 8.27753C107.481 7.75942 108.063 7.5 108.734 7.5C109.406 7.5 110.018 7.75942 110.511 8.27753C111.004 8.79636 111.25 9.40118 111.25 10.092C111.25 10.7828 111.004 11.3826 110.511 11.89C110.018 12.3981 109.426 12.6517 108.734 12.6517ZM106.721 30.7964V14.5959H110.779V30.7964H106.721Z" fill="#1D2433"/>
+        </svg>
+      </a>
+      <nav class="header-simple__nav" aria-label="Navegação principal">
+        <ul class="header-simple__list">
+          <li><a class="header-simple__link" href="#solucao">Plataforma</a></li>
+          <li><a class="header-simple__link" href="#diferenciais">Diferenciais</a></li>
+          <li><a class="header-simple__link" href="#depoimentos">Depoimentos</a></li>
+          <li><a class="header-simple__link" href="#faq">Dúvidas</a></li>
+        </ul>
+      </nav>
+      <div class="header-simple__actions">
+        <div class="header-simple__cta-wrap">
+          <a href="#contato" class="button button--filled button--md">Falar com a gente</a>
+        </div>
+        <button class="header-simple__toggle" aria-label="Abrir menu" aria-expanded="false" data-js="nav-toggle">
+          <span class="header-simple__toggle-bar"></span>
+          <span class="header-simple__toggle-bar"></span>
+          <span class="header-simple__toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+    <div class="header-simple__mobile-panel" data-js="nav-panel">
+      <div class="container">
+        <ul class="header-simple__mobile-list">
+          <li><a class="header-simple__mobile-link" href="#solucao">Plataforma</a></li>
+          <li><a class="header-simple__mobile-link" href="#diferenciais">Diferenciais</a></li>
+          <li><a class="header-simple__mobile-link" href="#depoimentos">Depoimentos</a></li>
+          <li><a class="header-simple__mobile-link" href="#faq">Dúvidas</a></li>
+        </ul>
+        <div class="header-simple__mobile-actions">
+          <a href="#contato" class="button button--filled button--md">Falar com a gente</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <span class="hero__eyebrow">Plataforma + BPO de compras</span>
+      <h1 class="hero__title">
+        Simplifique a gestão de compras do seu <em>restaurante</em>
+      </h1>
+      <p class="hero__desc">
+        Digitalize cotações, compare fornecedores em segundos e transforme o seu processo de compras
+        com mais tecnologia e lucro. Tudo em um sistema simples, rápido e feito pra quem exige resultado.
+      </p>
+      <div class="hero__actions" id="contato">
+        <a href="#" class="button button--filled button--lg">
+          Falar com a gente
+          <svg class="button__icon" aria-hidden="true" focusable="false"><use href="#icon-whatsapp"/></svg>
+        </a>
+        <a href="#solucao" class="button button--outline button--lg">Ver a plataforma</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ STATS / NOSSOS CLIENTES ══════════ -->
+  <section class="stats" aria-labelledby="stats-title">
+    <div class="container">
+      <div class="stats__header">
+        <span class="section-eyebrow">Nossos clientes</span>
+        <h2 class="section-heading__title" id="stats-title">Mais de 800 estabelecimentos confiam na gente</h2>
+      </div>
+      <div class="stats__grid">
+        <div class="stat-card">
+          <span class="stat-card__number">+800</span>
+          <p class="stat-card__label">Estabelecimentos atendidos em todo o Brasil</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__number">+200 mi</span>
+          <p class="stat-card__label">Em compras realizadas na plataforma por ano</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__number">+5.000</span>
+          <p class="stat-card__label">Fornecedores parceiros em todo o Brasil</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FEATURES (split rows) ══════════ -->
+  <section class="features" id="solucao" aria-labelledby="features-title">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-eyebrow">Plataforma Foozi</span>
+        <h2 class="section-heading__title" id="features-title">Tecnologia que coloca você no controle das suas compras</h2>
+        <p class="section-heading__desc">Da cotação à entrega, centralize todo o seu processo de compras em um único lugar — simples, rápido e feito pra quem exige resultado.</p>
+      </div>
+
+      <!-- Feature 1 -->
+      <div class="feature-row">
+        <div class="feature-row__media">
+          <img src="../assets/images/placeholders/placeholder-image.png" alt="dashboard com gráficos de indicadores de compras" width="600" height="450" loading="lazy" decoding="async">
+        </div>
+        <div class="feature-row__content">
+          <span class="feature-row__icon" aria-hidden="true"><svg><use href="#icon-chart"/></svg></span>
+          <h3 class="feature-row__title">Controle total sobre as suas compras com nossa tecnologia</h3>
+          <p class="feature-row__desc">
+            Visualize economia gerada, desempenho de fornecedores, variação de preços em tempo real, curva ABC
+            e diversos outros indicadores úteis para a sua gestão através dos nossos dashboards.
+            Descubra onde otimizar, negociar melhor e comprar com mais estratégia — tudo centralizado,
+            visual e pronto pra decisões rápidas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-row feature-row--reverse">
+        <div class="feature-row__media">
+          <img src="../assets/images/placeholders/placeholder-image.png" alt="cotação enviada por WhatsApp para fornecedores" width="600" height="450" loading="lazy" decoding="async">
+        </div>
+        <div class="feature-row__content">
+          <span class="feature-row__icon" aria-hidden="true"><svg><use href="#icon-chat"/></svg></span>
+          <h3 class="feature-row__title">Cotações automatizadas por WhatsApp para múltiplos fornecedores</h3>
+          <p class="feature-row__desc">
+            Você ainda precisa ligar ou pesquisar de forma manual por fornecedores? Dispare sua cotação por
+            WhatsApp para vários fornecedores ao mesmo tempo e feche com quem tiver o melhor preço.
+            Suas cotações serão digitais, rápidas e organizadas — otimize seu tempo, aumente sua margem
+            e negocie como os grandes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-row">
+        <div class="feature-row__media">
+          <img src="../assets/images/placeholders/placeholder-image.png" alt="cadastro de fornecedores e produtos na plataforma" width="600" height="450" loading="lazy" decoding="async">
+        </div>
+        <div class="feature-row__content">
+          <span class="feature-row__icon" aria-hidden="true"><svg><use href="#icon-folder"/></svg></span>
+          <h3 class="feature-row__title">Cadastre seus próprios fornecedores e produtos</h3>
+          <p class="feature-row__desc">
+            Você tem total liberdade para inserir novos itens e fornecedores sempre que precisar, sem depender
+            de suporte ou burocracias. A plataforma se adapta à sua realidade — seja incluindo aquele fornecedor
+            local de confiança ou atualizando o mix de insumos conforme a demanda do seu negócio.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-row feature-row--reverse">
+        <div class="feature-row__media">
+          <img src="../assets/images/placeholders/placeholder-image.png" alt="sugestões de fornecedores e produtos substitutos" width="600" height="450" loading="lazy" decoding="async">
+        </div>
+        <div class="feature-row__content">
+          <span class="feature-row__icon" aria-hidden="true"><svg><use href="#icon-swap"/></svg></span>
+          <h3 class="feature-row__title">Receba sugestões de fornecedores e produtos substitutos para economizar</h3>
+          <p class="feature-row__desc">
+            A plataforma analisa suas cotações em tempo real e apresenta automaticamente novos fornecedores e
+            produtos substitutos compatíveis, sem abrir mão da qualidade. Você amplia suas possibilidades de
+            negociação, compara alternativas com facilidade e encontra o melhor custo-benefício — tudo dentro
+            da plataforma, sem esforço manual.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="feature-row">
+        <div class="feature-row__media">
+          <img src="../assets/images/placeholders/placeholder-image.png" alt="histórico de compras e relatórios organizados" width="600" height="450" loading="lazy" decoding="async">
+        </div>
+        <div class="feature-row__content">
+          <span class="feature-row__icon" aria-hidden="true"><svg><use href="#icon-clock"/></svg></span>
+          <h3 class="feature-row__title">Seu histórico de compras sempre disponível</h3>
+          <p class="feature-row__desc">
+            Você não vai precisar guardar mais nada na cabeça ou ter diversas planilhas espalhadas.
+            A plataforma registra automaticamente todas as suas cotações, pedidos e notas fiscais e entrega
+            relatórios e dados retroativos organizados e fáceis de consultar. Compare preços antigos,
+            reveja decisões passadas e identifique padrões de compra com poucos cliques.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ DIFERENCIAIS ══════════ -->
+  <section class="differentials" id="diferenciais" aria-labelledby="differentials-title">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-eyebrow">Diferenciais</span>
+        <h2 class="section-heading__title" id="differentials-title">Diferenciais da Foozi</h2>
+        <p class="section-heading__desc">Mais do que uma plataforma: um time pronto pra cuidar das suas compras do início ao fim.</p>
+      </div>
+      <div class="differentials__grid">
+        <div class="differential-card">
+          <span class="differential-card__icon" aria-hidden="true"><svg><use href="#icon-headset"/></svg></span>
+          <p class="differential-card__title">Atendimento 24 horas por dia</p>
+        </div>
+        <div class="differential-card">
+          <span class="differential-card__icon" aria-hidden="true"><svg><use href="#icon-rocket"/></svg></span>
+          <p class="differential-card__title">Realizamos a implementação</p>
+        </div>
+        <div class="differential-card">
+          <span class="differential-card__icon" aria-hidden="true"><svg><use href="#icon-shield-check"/></svg></span>
+          <p class="differential-card__title">Sem multa de cancelamento</p>
+        </div>
+        <div class="differential-card">
+          <span class="differential-card__icon" aria-hidden="true"><svg><use href="#icon-box"/></svg></span>
+          <p class="differential-card__title">Cadastramos seus produtos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ POR QUE A FOOZI ══════════ -->
+  <section class="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-eyebrow">Por que a Foozi</span>
+        <h2 class="section-heading__title" id="why-title">Por que a Foozi é a escolha certa para o seu negócio?</h2>
+      </div>
+      <div class="why__grid">
+        <div class="why-card">
+          <span class="why-card__icon" aria-hidden="true"><svg><use href="#icon-bolt"/></svg></span>
+          <h3 class="why-card__title">Automatize tarefas e ganhe tempo</h3>
+          <p class="why-card__desc">Você vai eliminar tarefas repetitivas e libertar sua equipe da desorganização de planilhas, áudios e ligações.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card__icon" aria-hidden="true"><svg><use href="#icon-swap"/></svg></span>
+          <h3 class="why-card__title">Compre mais rápido e com menos esforço</h3>
+          <p class="why-card__desc">Você vai comprar mais rápido, pois terá o mesmo esforço para cotar diversos fornecedores ao mesmo tempo através das automações da plataforma.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card__icon" aria-hidden="true"><svg><use href="#icon-trending-down"/></svg></span>
+          <h3 class="why-card__title">Reduza drasticamente o tempo operacional</h3>
+          <p class="why-card__desc">Segundo nossos dados, reduzimos em até 80% o tempo gasto por proprietários, gerentes e compradores com tarefas operacionais.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card__icon" aria-hidden="true"><svg><use href="#icon-percent"/></svg></span>
+          <h3 class="why-card__title">Economize nas compras e reduza o CMV</h3>
+          <p class="why-card__desc">Nossos clientes economizam de 2% a 30% nas compras mensais e, por consequência, reduzem o seu CMV.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ DEPOIMENTOS ══════════ -->
+  <section class="testimonials" id="depoimentos" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-eyebrow">Depoimentos</span>
+        <h2 class="section-heading__title" id="testimonials-title">O que estão falando sobre nós</h2>
+      </div>
+      <div class="testimonials__grid">
+        <article class="testimonial-card">
+          <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+          <p class="testimonial-card__text">"Se você quiser vender bem, você precisa comprar bem. Faz um favor para o seu tempo e a sua empresa: contrate a Foozi!"</p>
+          <div class="testimonial-card__author">
+            <p class="testimonial-card__name">Elio Pimentel</p>
+            <p class="testimonial-card__role">Home Sushi Home Vitória</p>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+          <p class="testimonial-card__text">"Aumentou meu leque de fornecedores, facilitou muito a minha vida. Estou muito satisfeita com o serviço, e indico para outros empreendedores da área da alimentação."</p>
+          <div class="testimonial-card__author">
+            <p class="testimonial-card__name">Bianca Magalhães</p>
+            <p class="testimonial-card__role">Café Simão Bar</p>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+          <p class="testimonial-card__text">"A Foozi facilita muito a vida do empresário, ela centraliza o pedido de mercadorias e também busca os melhores preços e garante a qualidade do produto que a gente quer."</p>
+          <div class="testimonial-card__author">
+            <p class="testimonial-card__name">Fernando Dorsch</p>
+            <p class="testimonial-card__role">Los Chicos</p>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+          <p class="testimonial-card__text">"A Foozi foi uma das melhores contratações que a gente fez para a Don Calmon. Consigo resolver problemas de outras partes da empresa sem me preocupar com as compras. Sou muito satisfeita por ter conhecido a empresa."</p>
+          <div class="testimonial-card__author">
+            <p class="testimonial-card__name">Livia Calmon</p>
+            <p class="testimonial-card__role">Don Calmon</p>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+          <p class="testimonial-card__text">"A Foozi trouxe melhorias no nosso setor de compras, reduzindo tempo gasto na escolha de fornecedores, mantendo qualidade de produtos e com os melhores preços. Com a ajuda da Foozi nós podemos gastar o nosso tempo com coisas mais estratégicas para a empresa e crescer ainda mais."</p>
+          <div class="testimonial-card__author">
+            <p class="testimonial-card__name">Pedro Miranda</p>
+            <p class="testimonial-card__role">Mangalô Café Bar</p>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+          <p class="testimonial-card__text">"São sempre prestativos, dinâmicos, atentos a hora que nós precisamos e ainda tem um atendimento personalizado que faz toda a diferença. Nos dão o tempo que precisamos para administrar todo o nosso restaurante. Obrigado por essa equipe maravilhosa."</p>
+          <div class="testimonial-card__author">
+            <p class="testimonial-card__name">Sheila Dantas</p>
+            <p class="testimonial-card__role">Empório85 Wine Bar</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FAQ ══════════ -->
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-eyebrow">Perguntas frequentes</span>
+        <h2 class="section-heading__title" id="faq-title">Tudo que você precisa saber</h2>
+      </div>
+      <div class="faq__list">
+        <details class="faq-item" open>
+          <summary class="faq-item__trigger">
+            Como a Foozi proporciona até 30% de economia nas compras?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Comparamos automaticamente os preços entre milhares de fornecedores parceiros, identificamos os
+            melhores momentos de compra e sugerimos produtos substitutos com a mesma qualidade e custo menor.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            O que é um BPO de compras?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            É a terceirização do processo de compras: nossa equipe cuida das cotações, negociações e pedidos,
+            enquanto você foca na operação do seu negócio.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Como a Foozi garante o prazo e qualidade da entrega dos fornecedores?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Acompanhamos cada pedido, avaliamos o desempenho dos fornecedores continuamente e priorizamos
+            parceiros com histórico comprovado de pontualidade e qualidade.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Quais são os tipos de insumos que a Foozi pode negociar e comprar?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Praticamente todos os insumos do seu estabelecimento: hortifruti, proteínas, bebidas, descartáveis,
+            embalagens, produtos de limpeza e muito mais.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Como a Foozi melhora a organização e controle dos meus pedidos?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Centralizamos cotações, pedidos e notas fiscais em um único painel, com relatórios e indicadores
+            que facilitam o acompanhamento do seu CMV.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Quais são as vantagens de centralizar os fornecedores com a Foozi?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Você ganha poder de negociação, reduz o tempo gasto com múltiplos contatos e tem visibilidade total
+            do desempenho de cada fornecedor em um só lugar.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            A Foozi pode negociar com os meus fornecedores atuais?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Sim! Você mantém seus fornecedores de confiança e a Foozi passa a negociar com eles também,
+            ampliando suas opções sem perder os relacionamentos já construídos.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            O serviço da Foozi é compatível com o sistema de gestão que já uso no meu estabelecimento?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Sim, a plataforma se integra com os principais sistemas de gestão do mercado, sem necessidade de
+            trocar suas ferramentas atuais.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Como é feita a aprovação das compras realizadas pela Foozi?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Você define os responsáveis e os limites de aprovação. Toda compra passa por validação antes de ser
+            fechada com o fornecedor.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Quem entrega as mercadorias e os insumos?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            A entrega é feita diretamente pelos fornecedores, da mesma forma que você já está acostumado —
+            só que com preços melhores e processo mais simples.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            Há um tempo mínimo de duração para usar os serviços da Foozi?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Não. Trabalhamos sem fidelidade e sem multa de cancelamento, porque acreditamos que os resultados
+            é que devem te manter por aqui.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__trigger">
+            A Foozi oferece recomendações de boas práticas para a equipe do meu restaurante?
+            <span class="faq-item__icon" aria-hidden="true"><svg><use href="#icon-plus"/></svg></span>
+          </summary>
+          <div class="faq-item__panel">
+            Sim, nossa equipe compartilha boas práticas de compras, padronização e controle de estoque para
+            ajudar seu time a operar com mais eficiência.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ NEWSLETTER ══════════ -->
+  <section class="newsletter" aria-labelledby="newsletter-title">
+    <div class="container newsletter__inner">
+      <h2 class="newsletter__title" id="newsletter-title">Fique por dentro das novidades</h2>
+      <p class="newsletter__desc">
+        Assine nossa newsletter para ficar por dentro de novidades e lançamentos. Ao assinar, você concorda
+        com nossa Política de Privacidade e fornece consentimento para receber atualizações de nossa empresa.
+      </p>
+      <form class="newsletter__form" action="#" method="post">
+        <label for="newsletter-email" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">E-mail</label>
+        <input type="email" id="newsletter-email" name="email" class="newsletter__input" placeholder="Seu melhor e-mail" required>
+        <button type="submit" class="button button--filled button--inverse button--md">
+          Assinar
+          <svg class="button__icon" aria-hidden="true" focusable="false"><use href="#icon-mail"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="footer">
+    <div class="footer__grid container">
+
+      <div class="footer__brand">
+        <a href="#" class="footer__logo" aria-label="Foozi">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117 40" fill="none" aria-hidden="true" focusable="false">
+            <path d="M19.7824 5.00127C23.8381 4.94968 27.6489 6.47695 30.5308 9.31784V9.31744C33.4126 12.1591 35 15.953 35 19.9998C35 28.2711 28.2712 35 20.0001 35C14.8871 35 10.9703 31.9812 10.8062 31.8528L13.0857 29.3844C13.8733 29.9255 16.6629 31.6636 20.0005 31.6636C26.432 31.6636 31.664 26.431 31.664 19.9998C31.664 16.8531 30.4296 13.9033 28.1887 11.6936C25.9482 9.48479 22.9799 8.29465 19.8303 8.3373C13.619 8.42545 8.46455 13.5495 8.33986 19.759C8.30817 21.3398 8.59129 22.8891 9.16726 24.3298L13.7486 19.4198C15.6264 17.4075 18.2824 16.2531 21.0351 16.2531H26.4738V19.59H21.0351C19.204 19.59 17.4371 20.3577 16.1877 21.6965L8.53078 29.9023L7.37114 28.0968C5.76184 25.5914 4.94297 22.6851 5.00309 19.6923C5.08107 15.8067 6.65707 12.1433 9.44022 9.37674C12.2234 6.61019 15.8961 5.05651 19.7824 5.00127Z" fill="#5041C3"/>
+            <path d="M16.1329 26.0837L19.2138 22.7469H23.9527V26.0837H16.1329Z" fill="#5041C3"/>
+            <path d="M54.6579 11.68C52.4349 11.5073 51.3231 12.4253 51.3231 14.4339V14.5959H54.6579V18.6132H51.3231V30.7964H47.2647V18.6132H45V14.5959H47.2647V14.4339C47.2647 12.1444 47.8832 10.4059 49.121 9.21773C50.3581 8.02958 52.2039 7.51146 54.6572 7.66267V11.68H54.6579Z" fill="#1D2433"/>
+            <path d="M69.1917 28.7712C67.5762 30.4238 65.6051 31.25 63.2777 31.25C60.9504 31.25 58.9835 30.4238 57.3791 28.7712C55.7746 27.1187 54.9724 25.0936 54.9724 22.6965C54.9724 20.2994 55.7746 18.2736 57.3791 16.6211C58.9835 14.9685 60.9497 14.1423 63.2777 14.1423C65.6058 14.1423 67.5769 14.9685 69.1917 16.6211C70.8066 18.2736 71.6137 20.2987 71.6137 22.6965C71.6137 25.0943 70.8059 27.1195 69.1917 28.7712ZM60.2414 25.9034C61.0485 26.7461 62.0602 27.1675 63.277 27.1675C64.4939 27.1675 65.5104 26.7461 66.3287 25.9034C67.1469 25.0613 67.5553 23.9921 67.5553 22.6958C67.5553 21.3994 67.1462 20.3303 66.3287 19.4882C65.5111 18.6462 64.4932 18.2248 63.277 18.2248C62.0609 18.2248 61.0485 18.6462 60.2414 19.4882C59.4336 20.331 59.0301 21.4002 59.0301 22.6958C59.0301 23.9914 59.4336 25.0613 60.2414 25.9034Z" fill="#1D2433"/>
+            <path d="M87.7519 28.7712C86.1364 30.4238 84.1653 31.25 81.8379 31.25C79.5106 31.25 77.5437 30.4238 75.9393 28.7712C74.3348 27.1187 73.5326 25.0936 73.5326 22.6965C73.5326 20.2994 74.3348 18.2736 75.9393 16.6211C77.5437 14.9685 79.5099 14.1423 81.8379 14.1423C84.166 14.1423 86.1371 14.9685 87.7519 16.6211C89.3668 18.2736 90.1739 20.2987 90.1739 22.6965C90.1739 25.0943 89.3661 27.1195 87.7519 28.7712ZM78.8016 25.9034C79.6087 26.7461 80.6204 27.1675 81.8373 27.1675C83.0541 27.1675 84.0707 26.7461 84.8889 25.9034C85.7071 25.0613 86.1155 23.9921 86.1155 22.6958C86.1155 21.3994 85.7064 20.3303 84.8889 19.4882C84.0713 18.6462 83.0535 18.2248 81.8373 18.2248C80.6211 18.2248 79.6087 18.6462 78.8016 19.4882C77.9938 20.331 77.5903 21.4002 77.5903 22.6958C77.5903 23.9914 77.9938 25.0613 78.8016 25.9034Z" fill="#1D2433"/>
+            <path d="M96.8574 26.8758H103.841V30.7964H91.4381V28.0138L98.0701 18.5165H91.747V14.5959H103.533V17.3735L96.8574 26.8758Z" fill="#1D2433"/>
+            <path d="M108.734 12.6517C108.063 12.6517 107.481 12.3981 106.988 11.89C106.495 11.3826 106.25 10.7835 106.25 10.092C106.25 9.40046 106.496 8.79564 106.988 8.27753C107.481 7.75942 108.063 7.5 108.734 7.5C109.406 7.5 110.018 7.75942 110.511 8.27753C111.004 8.79636 111.25 9.40118 111.25 10.092C111.25 10.7828 111.004 11.3826 110.511 11.89C110.018 12.3981 109.426 12.6517 108.734 12.6517ZM106.721 30.7964V14.5959H110.779V30.7964H106.721Z" fill="#1D2433"/>
+          </svg>
+        </a>
+        <p class="footer__description">
+          Plataforma e BPO de compras especializada em restaurantes, hotéis, padarias e supermercados.
+        </p>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/foozi.br/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#icon-instagram"/></svg></a>
+          <a href="https://www.linkedin.com/company/foozibr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#icon-linkedin"/></svg></a>
+          <a href="https://wa.me/5527928340088" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#icon-whatsapp"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer__links">
+
+        <div class="footer__group">
+          <p class="footer__group-title">Links rápidos</p>
+          <ul class="footer__group-list" role="list">
+            <li><a class="footer__group-link" href="#">Início</a></li>
+            <li><a class="footer__group-link" href="#">Sobre nós</a></li>
+            <li><a class="footer__group-link" href="#">Para fornecedores</a></li>
+            <li><a class="footer__group-link" href="#">Para restaurantes</a></li>
+            <li><a class="footer__group-link" href="#faq">Perguntas frequentes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__group">
+          <p class="footer__group-title">Soluções</p>
+          <ul class="footer__group-list" role="list">
+            <li><a class="footer__group-link" href="#solucao">Dashboards e indicadores</a></li>
+            <li><a class="footer__group-link" href="#solucao">Cotações por WhatsApp</a></li>
+            <li><a class="footer__group-link" href="#solucao">Cadastro de fornecedores</a></li>
+            <li><a class="footer__group-link" href="#solucao">Histórico de compras</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__group">
+          <p class="footer__group-title">Informações legais</p>
+          <p class="footer__group-text">
+            CNPJ: 52.092.512/0001-29<br>
+            Ed Alphaville — Praça San Martin, 84<br>
+            Praia do Canto, Vitória - ES, 29055-170
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <hr class="footer__divider">
+
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner container">
+      <p class="footer__copyright">© 2026 Foozi. Todos os direitos reservados.</p>
+      <ul class="footer__bottom-links" role="list">
+        <li><a class="footer__bottom-link" href="#">Política de Privacidade</a></li>
+        <li><a class="footer__bottom-link" href="#">Termos de serviço</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    /* Header mobile nav toggle */
+    (function () {
+      'use strict';
+      document.querySelectorAll('.header-simple').forEach(function (header) {
+        var toggle = header.querySelector('[data-js="nav-toggle"]');
+        var panel  = header.querySelector('[data-js="nav-panel"]');
+        if (!toggle || !panel) return;
+        toggle.addEventListener('click', function () {
+          var next = toggle.getAttribute('aria-expanded') !== 'true';
+          toggle.setAttribute('aria-expanded', String(next));
+          panel.classList.toggle('header-simple__mobile-panel--open', next);
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
