@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foozi Premium | BPO de Compras para Foodservice</title>
+<meta name="description" content="Um time dedicado da Foozi faz suas compras do início ao fim: cotação, negociação, pedido e entrega, com meta mensal de redução de custo. Agende seu diagnóstico de economia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --roxo:#5B45E0;
+  --roxo-escuro:#4633B8;
+  --roxo-claro:#EEEBFC;
+  --tinta:#17122B;
+  --cinza:#5C5670;
+  --fundo:#FFFFFF;
+  --fundo-suave:#F7F6FB;
+  --verde:#16A34A;
+  --tomate:#E8503A;
+  --borda:#E7E4F2;
+  --raio:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--tinta);background:var(--fundo);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.12;letter-spacing:-0.015em}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.narrow{max-width:760px;margin:0 auto}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--borda)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo-svg{height:32px;width:auto;display:block}
+.nav-cta{background:var(--roxo);color:#fff;text-decoration:none;font-weight:600;font-size:.9rem;padding:10px 20px;border-radius:999px;transition:background .2s}
+.nav-cta:hover{background:var(--roxo-escuro)}
+
+/* HERO */
+.hero{padding:84px 0 48px;text-align:center;position:relative;overflow:hidden}
+.eyebrow{display:inline-block;background:var(--roxo-claro);color:var(--roxo);font-weight:600;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:7px 16px;border-radius:999px;margin-bottom:28px}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem);font-weight:800;max-width:840px;margin:0 auto 24px}
+.marca-tomate{position:relative;white-space:nowrap;color:var(--tomate)}
+.dia-semana{display:inline-block}
+.marca-tomate svg{position:absolute;left:0;bottom:-6px;width:100%;height:12px;overflow:visible}
+.hero p.sub{font-size:clamp(1.05rem,2vw,1.2rem);color:var(--cinza);max-width:640px;margin:0 auto 36px}
+.cta-principal{display:inline-block;background:var(--roxo);color:#fff;text-decoration:none;font-weight:700;font-size:1.08rem;padding:18px 44px;border-radius:14px;box-shadow:0 12px 28px rgba(91,69,224,.28);transition:transform .15s,background .2s;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.cta-principal:hover{background:var(--roxo-escuro);transform:translateY(-2px)}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin-top:24px;font-size:.9rem;color:var(--cinza);font-weight:500}
+.badges li{list-style:none;display:flex;align-items:center;gap:7px}
+.badges svg{flex-shrink:0}
+
+/* HERO IMAGE */
+.hero-visual{position:relative;max-width:920px;margin:52px auto 0}
+.hero-visual img{width:100%;height:380px;object-fit:cover;border-radius:24px;display:block;box-shadow:0 24px 60px rgba(23,18,43,.16)}
+.caption-card{
+  position:absolute;left:28px;bottom:28px;background:#fff;border-radius:14px;
+  padding:16px 22px;box-shadow:0 10px 30px rgba(23,18,43,.18);
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.02rem;
+  display:flex;align-items:center;gap:10px;max-width:78%;text-align:left;
+}
+.caption-card .dot{width:10px;height:10px;border-radius:50%;background:var(--tomate);flex-shrink:0}
+
+/* AVATARES */
+.avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.25);flex-shrink:0}
+.avatar-lg{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);display:block;margin:0 auto 18px}
+.depo .autor{display:flex;align-items:center;gap:12px}
+.depo .autor .info strong{display:block}
+
+/* FOTO DO FORM */
+.form-foto{margin-top:34px;position:relative}
+.form-foto img{width:100%;height:300px;object-fit:cover;object-position:center 25%;border-radius:18px;display:block}
+.form-foto .selo{
+  position:absolute;right:16px;bottom:16px;background:#fff;border-radius:999px;
+  padding:9px 18px;font-size:.82rem;font-weight:600;color:var(--tinta);
+  box-shadow:0 8px 22px rgba(23,18,43,.16);display:flex;align-items:center;gap:7px;
+}
+
+/* SEGMENTOS */
+.segmentos{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:40px}
+.seg{background:#fff;border:1px solid var(--borda);border-radius:999px;padding:9px 18px;font-size:.88rem;font-weight:500;color:var(--cinza);display:flex;align-items:center;gap:7px}
+
+/* PILARES */
+.pilares{border-top:1px solid var(--borda);border-bottom:1px solid var(--borda);background:var(--fundo-suave)}
+.pilares-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:30px 24px}
+.pilar{display:flex;align-items:center;gap:12px}
+.pilar .ico{width:38px;height:38px;flex-shrink:0;background:var(--roxo-claro);border-radius:11px;display:flex;align-items:center;justify-content:center}
+.pilar .txt{font-size:.82rem;font-weight:600;line-height:1.35;text-transform:uppercase;letter-spacing:.02em;color:var(--tinta)}
+
+/* PROOF STRIP */
+.proof-strip{padding:48px 0 8px}
+.proof-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
+.proof-inner .num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.9rem;color:var(--tinta)}
+.proof-inner .lbl{font-size:.88rem;color:var(--cinza);margin-top:2px}
+.fonte-nota{text-align:center;font-size:.75rem;color:#9B95B0;margin-top:22px}
+
+/* PREMISSAS */
+.premissas{padding:96px 0}
+.premissas h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;margin-bottom:14px;text-align:center}
+.premissas .intro{color:var(--cinza);text-align:center;max-width:560px;margin:0 auto 56px}
+.cadeia{position:relative;max-width:680px;margin:0 auto}
+.cadeia::before{content:"";position:absolute;left:21px;top:24px;bottom:24px;width:2px;background:linear-gradient(var(--borda),var(--roxo))}
+.premissa{position:relative;padding:0 0 44px 64px}
+.premissa:last-of-type{padding-bottom:48px}
+.premissa .ponto{position:absolute;left:8px;top:2px;width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--borda);display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.8rem;color:var(--cinza)}
+.premissa h3{font-size:1.18rem;font-weight:700;margin-bottom:6px}
+.premissa p{color:var(--cinza);font-size:1rem}
+.conclusao{position:relative;background:var(--roxo);color:#fff;border-radius:var(--raio);padding:36px 40px}
+.conclusao::before{content:"";position:absolute;left:21px;top:-48px;height:48px;width:2px;background:var(--roxo)}
+.conclusao h3{font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:800;margin-bottom:8px}
+.conclusao p{opacity:.85;font-size:1rem}
+
+/* COMO FUNCIONA */
+.como{padding:88px 0;background:var(--fundo-suave)}
+.como h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;text-align:center;margin-bottom:56px}
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.passo{background:#fff;border:1px solid var(--borda);border-radius:var(--raio);padding:32px 28px}
+.passo .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.85rem;color:var(--roxo);background:var(--roxo-claro);width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.passo h3{font-size:1.12rem;font-weight:700;margin-bottom:8px}
+.passo p{color:var(--cinza);font-size:.95rem}
+
+/* QUOTE DESTAQUE (estilo Toast) */
+.quote-hero{padding:104px 0;background:var(--tinta);color:#fff;text-align:center}
+.quote-hero .resultado{display:inline-block;background:rgba(232,80,58,.16);color:#FF8A76;font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;padding:8px 18px;border-radius:999px;margin-bottom:30px}
+.quote-hero blockquote{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.5rem,3.4vw,2.3rem);font-weight:700;line-height:1.32;max-width:820px;margin:0 auto}
+.quote-hero .autor{margin-top:30px;font-size:.98rem;color:#B7B0D6}
+.quote-hero .autor strong{color:#fff;font-weight:600;display:block;font-size:1.05rem}
+.depos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:64px;text-align:left}
+.depo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--raio);padding:26px;font-size:.92rem;line-height:1.55}
+.depo p{color:#D8D3EE}
+.depo .autor{margin-top:16px;font-size:.85rem;color:#9B92C4}
+.depo .autor strong{color:#fff;font-weight:600;display:block}
+.quote-hero .footnote{margin-top:48px;font-size:.75rem;color:#7A719E;max-width:560px;margin-left:auto;margin-right:auto}
+
+/* INCLUSO */
+.incluso{padding:96px 0}
+.incluso h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;text-align:center;margin-bottom:12px}
+.incluso .intro{color:var(--cinza);text-align:center;max-width:540px;margin:0 auto 52px}
+.card-plano{border:1px solid var(--borda);border-radius:24px;padding:44px 48px;box-shadow:0 18px 50px rgba(23,18,43,.06)}
+.plano-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:28px;border-bottom:1px solid var(--borda);margin-bottom:28px}
+.plano-head h3{font-size:1.5rem;font-weight:800;display:flex;align-items:center;gap:12px}
+.gema{width:30px;height:30px;flex-shrink:0}
+.pill{background:var(--roxo);color:#fff;font-size:.8rem;font-weight:600;padding:8px 16px;border-radius:999px}
+.beneficios{display:grid;grid-template-columns:1fr 1fr;gap:16px 36px;list-style:none}
+.beneficios li{display:flex;gap:11px;align-items:flex-start;font-size:.98rem}
+.beneficios li svg{flex-shrink:0;margin-top:4px}
+.beneficios li strong{font-weight:600}
+.beneficios li span{color:var(--cinza);font-size:.88rem;display:block}
+.card-plano .cta-area{margin-top:36px;text-align:center}
+
+/* STATS BAND */
+.stats{padding:0 0 96px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:0 auto}
+.stat-card{border:1px solid var(--borda);border-radius:var(--raio);padding:38px 36px;background:var(--fundo-suave)}
+.stat-card .num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(2rem,4.5vw,2.8rem);color:var(--roxo)}
+.stat-card p{color:var(--cinza);font-size:.95rem;margin-top:6px}
+.stats .fonte-nota{margin-top:18px}
+
+/* QUALIFICA */
+.qualifica{padding:0 0 96px}
+.qualifica h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;text-align:center;margin-bottom:52px}
+.duas-colunas{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:0 auto}
+.col-fit{border-radius:var(--raio);padding:34px 32px;border:1px solid var(--borda)}
+.col-fit.sim{background:var(--roxo-claro);border-color:transparent}
+.col-fit h3{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:9px}
+.col-fit ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.col-fit li{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;color:var(--cinza)}
+.col-fit li svg{flex-shrink:0;margin-top:4px}
+.nota-preco{max-width:880px;margin:28px auto 0;text-align:center;font-size:.95rem;color:var(--cinza)}
+.nota-preco strong{color:var(--tinta)}
+
+/* ESCASSEZ */
+.escassez{padding:0 0 96px}
+.escassez-card{max-width:760px;margin:0 auto;border:2px solid var(--roxo);border-radius:24px;padding:44px 48px;text-align:center;background:#fff}
+.escassez-card .tag{display:inline-block;background:var(--tomate);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.escassez-card h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;margin-bottom:12px}
+.escassez-card p{color:var(--cinza);max-width:540px;margin:0 auto}
+
+/* FAQ */
+.faq{padding:88px 0;background:var(--fundo-suave)}
+.faq h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;text-align:center;margin-bottom:48px}
+.faq details{background:#fff;border:1px solid var(--borda);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.faq summary{cursor:pointer;font-weight:600;font-size:1rem;padding:20px 24px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.3rem;color:var(--roxo);transition:transform .2s;flex-shrink:0}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .resposta{padding:0 24px 22px;color:var(--cinza);font-size:.95rem}
+
+/* FORM (estilo Toast) */
+.form-section{padding:104px 0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.form-copy h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;margin-bottom:16px}
+.form-copy p{color:var(--cinza);font-size:1.05rem;margin-bottom:28px}
+.form-copy ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+.form-copy li{display:flex;gap:11px;align-items:flex-start;font-size:.97rem;color:var(--cinza)}
+.form-copy li svg{flex-shrink:0;margin-top:4px}
+.form-copy li strong{color:var(--tinta);font-weight:600}
+.form-card{background:#fff;border:1px solid var(--borda);border-radius:24px;padding:38px 36px;box-shadow:0 22px 60px rgba(23,18,43,.08)}
+.form-card h3{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.form-card .sub{font-size:.9rem;color:var(--cinza);margin-bottom:26px}
+.campo{margin-bottom:16px}
+.campo label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px}
+.campo input,.campo select{
+  width:100%;padding:13px 15px;border:1px solid var(--borda);border-radius:11px;
+  font-family:'Inter',sans-serif;font-size:.95rem;color:var(--tinta);background:#fff;
+  transition:border-color .15s,box-shadow .15s;
+}
+.campo input:focus,.campo select:focus{outline:none;border-color:var(--roxo);box-shadow:0 0 0 3px rgba(91,69,224,.14)}
+.form-card .cta-principal{width:100%;margin-top:8px}
+.form-card .privacidade{font-size:.74rem;color:#9B95B0;margin-top:16px;text-align:center}
+.form-card .privacidade a{color:var(--cinza)}
+.form-sucesso{display:none;text-align:center;padding:30px 10px}
+.form-sucesso h3{font-size:1.3rem;margin-bottom:10px}
+.form-sucesso p{color:var(--cinza);font-size:.95rem}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--borda);padding:36px 0;text-align:center;font-size:.85rem;color:var(--cinza)}
+.footer a{color:var(--cinza)}
+.footer .legal{font-size:.74rem;color:#9B95B0;max-width:680px;margin:14px auto 0}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .form-grid{grid-template-columns:1fr;gap:40px}
+}
+@media (max-width:860px){
+  .passos{grid-template-columns:1fr}
+  .depos{grid-template-columns:1fr}
+  .beneficios{grid-template-columns:1fr}
+  .duas-colunas{grid-template-columns:1fr}
+  .proof-inner{grid-template-columns:1fr;gap:18px}
+  .pilares-inner{grid-template-columns:1fr 1fr;gap:18px}
+  .stats-grid{grid-template-columns:1fr}
+  .card-plano{padding:32px 26px}
+  .escassez-card{padding:34px 26px}
+  .conclusao{padding:28px 26px}
+  .premissa{padding-left:54px}
+  .form-card{padding:30px 24px}
+  .hero-visual img{height:240px}
+  .caption-card{left:14px;bottom:14px;font-size:.88rem;padding:12px 16px;max-width:88%}
+  .form-foto img{height:220px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="https://www.foozi.com.br/" aria-label="Foozi"><svg class="logo-svg" width="117" height="40" viewBox="0 0 117 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.7824 5.00127C23.8381 4.94968 27.6489 6.47695 30.5308 9.31784V9.31744C33.4126 12.1591 35 15.953 35 19.9998C35 28.2711 28.2712 35 20.0001 35C14.8871 35 10.9703 31.9812 10.8062 31.8528L13.0857 29.3844C13.8733 29.9255 16.6629 31.6636 20.0005 31.6636C26.432 31.6636 31.664 26.431 31.664 19.9998C31.664 16.8531 30.4296 13.9033 28.1887 11.6936C25.9482 9.48479 22.9799 8.29465 19.8303 8.3373C13.619 8.42545 8.46455 13.5495 8.33986 19.759C8.30817 21.3398 8.59129 22.8891 9.16726 24.3298L13.7486 19.4198C15.6264 17.4075 18.2824 16.2531 21.0351 16.2531H26.4738V19.59H21.0351C19.204 19.59 17.4371 20.3577 16.1877 21.6965L8.53078 29.9023L7.37114 28.0968C5.76184 25.5914 4.94297 22.6851 5.00309 19.6923C5.08107 15.8067 6.65707 12.1433 9.44022 9.37674C12.2234 6.61019 15.8961 5.05651 19.7824 5.00127Z" fill="#8E93F2"/>
+<path d="M16.1329 26.0837L19.2138 22.7469H23.9527V26.0837H16.1329Z" fill="#8E93F2"/>
+<path d="M54.6579 11.68C52.4349 11.5073 51.3231 12.4253 51.3231 14.4339V14.5959H54.6579V18.6132H51.3231V30.7964H47.2647V18.6132H45V14.5959H47.2647V14.4339C47.2647 12.1444 47.8832 10.4059 49.121 9.21773C50.3581 8.02958 52.2039 7.51146 54.6572 7.66267V11.68H54.6579Z" fill="#1D2433"/>
+<path d="M69.1917 28.7712C67.5762 30.4238 65.6051 31.25 63.2777 31.25C60.9504 31.25 58.9835 30.4238 57.3791 28.7712C55.7746 27.1187 54.9724 25.0936 54.9724 22.6965C54.9724 20.2994 55.7746 18.2736 57.3791 16.6211C58.9835 14.9685 60.9497 14.1423 63.2777 14.1423C65.6058 14.1423 67.5769 14.9685 69.1917 16.6211C70.8066 18.2736 71.6137 20.2987 71.6137 22.6965C71.6137 25.0943 70.8059 27.1195 69.1917 28.7712ZM60.2414 25.9034C61.0485 26.7461 62.0602 27.1675 63.277 27.1675C64.4939 27.1675 65.5104 26.7461 66.3287 25.9034C67.1469 25.0613 67.5553 23.9921 67.5553 22.6958C67.5553 21.3994 67.1462 20.3303 66.3287 19.4882C65.5111 18.6462 64.4932 18.2248 63.277 18.2248C62.0609 18.2248 61.0485 18.6462 60.2414 19.4882C59.4336 20.331 59.0301 21.4002 59.0301 22.6958C59.0301 23.9914 59.4336 25.0613 60.2414 25.9034Z" fill="#1D2433"/>
+<path d="M87.7519 28.7712C86.1364 30.4238 84.1653 31.25 81.8379 31.25C79.5106 31.25 77.5437 30.4238 75.9393 28.7712C74.3348 27.1187 73.5326 25.0936 73.5326 22.6965C73.5326 20.2994 74.3348 18.2736 75.9393 16.6211C77.5437 14.9685 79.5099 14.1423 81.8379 14.1423C84.166 14.1423 86.1371 14.9685 87.7519 16.6211C89.3668 18.2736 90.1739 20.2987 90.1739 22.6965C90.1739 25.0943 89.3661 27.1195 87.7519 28.7712ZM78.8016 25.9034C79.6087 26.7461 80.6204 27.1675 81.8373 27.1675C83.0541 27.1675 84.0707 26.7461 84.8889 25.9034C85.7071 25.0613 86.1155 23.9921 86.1155 22.6958C86.1155 21.3994 85.7064 20.3303 84.8889 19.4882C84.0713 18.6462 83.0535 18.2248 81.8373 18.2248C80.6211 18.2248 79.6087 18.6462 78.8016 19.4882C77.9938 20.331 77.5903 21.4002 77.5903 22.6958C77.5903 23.9914 77.9938 25.0613 78.8016 25.9034Z" fill="#1D2433"/>
+<path d="M96.8574 26.8758H103.841V30.7964H91.4381V28.0138L98.0701 18.5165H91.747V14.5959H103.533V17.3735L96.8574 26.8758Z" fill="#1D2433"/>
+<path d="M108.734 12.6517C108.063 12.6517 107.481 12.3981 106.988 11.89C106.495 11.3826 106.25 10.7835 106.25 10.092C106.25 9.40046 106.496 8.79564 106.988 8.27753C107.481 7.75942 108.063 7.5 108.734 7.5C109.406 7.5 110.018 7.75942 110.511 8.27753C111.004 8.79636 111.25 9.40118 111.25 10.092C111.25 10.7828 111.004 11.3826 110.511 11.89C110.018 12.3981 109.426 12.6517 108.734 12.6517ZM106.721 30.7964V14.5959H110.779V30.7964H106.721Z" fill="#1D2433"/>
+</svg></a>
+    <a class="nav-cta" href="#diagnostico">Agendar diagnóstico</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">Plano Premium · BPO de Compras</span>
+    <h1>Ninguém abre um restaurante para passar <span class="dia-semana" id="dia-semana">a terça-feira</span> <span class="marca-tomate">cotando tomate<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 Q 50 2 100 7 T 198 5" fill="none" stroke="#E8503A" stroke-width="4" stroke-linecap="round"/></svg></span>.</h1>
+    <p class="sub">No plano Premium, um time dedicado da Foozi faz suas compras do início ao fim: cotação, negociação, pedido e acompanhamento de entrega, com meta mensal de redução de custo. Você aprova. A gente executa.</p>
+    <a class="cta-principal" href="#diagnostico">Agendar diagnóstico de economia →</a>
+    <ul class="badges">
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Implementação feita pelo nosso time</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Relatório mensal de economia</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Sem multa de cancelamento</li>
+    </ul>
+    <div class="segmentos">
+      <span class="seg">🍽️ Restaurantes</span>
+      <span class="seg">🏨 Hotéis</span>
+      <span class="seg">🥖 Padarias</span>
+      <span class="seg">🛒 Supermercados</span>
+      <span class="seg">📦 Dark kitchens</span>
+      <span class="seg">🍕 Redes e franquias</span>
+    </div>
+
+    <div class="hero-visual reveal">
+      <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=1600&q=75&auto=format&fit=crop" alt="Salão de restaurante cheio, com clientes em todas as mesas e equipe atendendo" loading="lazy">
+      <div class="caption-card"><span class="dot"></span>Seu lugar é aqui. Não na planilha de cotação.</div>
+    </div>
+  </div>
+</header>
+
+<!-- PILARES (do site Foozi, formato Toast) -->
+<section class="pilares">
+  <div class="container pilares-inner">
+    <div class="pilar">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#5B45E0" stroke-width="2"/><path d="M12 7v5l3 3" stroke="#5B45E0" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="txt">Atendimento 24 horas por dia</div>
+    </div>
+    <div class="pilar">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#5B45E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="txt">Realizamos a implementação</div>
+    </div>
+    <div class="pilar">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="#5B45E0" stroke-width="2"/><path d="M9 12l6 0" stroke="#5B45E0" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+      <div class="txt">Sem multa de cancelamento</div>
+    </div>
+    <div class="pilar">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="#5B45E0" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+      <div class="txt">Cadastramos seus produtos</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<section class="proof-strip">
+  <div class="container">
+    <div class="proof-inner">
+      <div><div class="num">+800</div><div class="lbl">estabelecimentos confiam na Foozi</div></div>
+      <div><div class="num">+R$ 200 milhões/ano</div><div class="lbl">em compras na plataforma</div></div>
+      <div><div class="num">+5.000</div><div class="lbl">fornecedores parceiros no Brasil</div></div>
+    </div>
+    <p class="fonte-nota">Dados Foozi, 2026.</p>
+  </div>
+</section>
+
+<!-- PREMISSAS -->
+<section class="premissas">
+  <div class="container">
+    <h2 class="reveal">Toda operação de foodservice tem a mesma rotina invisível.</h2>
+    <p class="intro reveal">Alguém para tudo pra cotar insumo. Toda semana. Item por item. Pense em quem faz isso aí na sua casa.</p>
+
+    <div class="cadeia">
+      <div class="premissa reveal">
+        <div class="ponto">1</div>
+        <h3>Comprar bem dá trabalho. E não tem atalho.</h3>
+        <p>Cotar com vários fornecedores, comparar preço item por item, negociar frete, conferir se o pedido chegou certo. Quem pula etapa, paga mais caro.</p>
+      </div>
+      <div class="premissa reveal">
+        <div class="ponto">2</div>
+        <h3>Quem faz isso no restaurante é o dono ou o gerente.</h3>
+        <p>As duas pessoas mais caras da casa, gastando horas da semana no trabalho mais repetitivo da operação, em vez de cuidar do salão, da cozinha e do time.</p>
+      </div>
+      <div class="premissa reveal">
+        <div class="ponto">3</div>
+        <h3>As grandes redes não operam assim.</h3>
+        <p>Elas têm central de compras: gente cujo único trabalho é comprar melhor: com volume, com método e com meta. É por isso que pagam menos pelo mesmo insumo.</p>
+      </div>
+      <div class="conclusao reveal">
+        <h3>Restaurante de 1, 2 ou 5 CNPJs não tem como montar uma central de compras. Mas pode contratar uma pronta.</h3>
+        <p>É exatamente isso que o plano Premium da Foozi é.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como">
+  <div class="container">
+    <h2 class="reveal">Como funciona, em 3 passos</h2>
+    <div class="passos">
+      <div class="passo reveal">
+        <div class="n">1</div>
+        <h3>Diagnóstico de economia potencial</h3>
+        <p>Analisamos suas compras atuais e definimos juntos a meta mensal de redução de custo da sua operação. Antes de você assinar qualquer coisa.</p>
+      </div>
+      <div class="passo reveal">
+        <div class="n">2</div>
+        <h3>Assumimos a operação</h3>
+        <p>O time dedicado da Foozi cota, negocia, faz o pedido e acompanha a entrega junto ao fornecedor. Toda compra passa pela sua aprovação. Sai da sua mão o trabalho, não a decisão.</p>
+      </div>
+      <div class="passo reveal">
+        <div class="n">3</div>
+        <h3>Relatório mensal</h3>
+        <p>Quanto foi comprado, quanto foi economizado e as recomendações do próximo mês. Você vê em real o que deixou de gastar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE DESTAQUE -->
+<section class="quote-hero">
+  <div class="container">
+    <span class="resultado reveal">Uma das melhores contratações que a gente fez</span>
+    <blockquote class="reveal">“Consigo resolver problemas de outras partes da empresa sem me preocupar com as compras.”</blockquote>
+    <div class="autor reveal">
+      <img class="avatar-lg" src="https://www.foozi.com.br/img/livia-calmon.webp" alt="Livia Calmon, Don Calmon" loading="lazy">
+      <strong>Livia Calmon</strong>Don Calmon
+    </div>
+
+    <div class="depos">
+      <div class="depo reveal">
+        <p>“Nos dão o tempo que precisamos para administrar todo o nosso restaurante. São prestativos, dinâmicos e o atendimento personalizado faz toda a diferença.”</p>
+        <div class="autor"><img class="avatar" src="https://www.foozi.com.br/img/scheila-dantas.webp" alt="Sheila Dantas" loading="lazy"><div class="info"><strong>Sheila Dantas</strong>Empório85 Wine Bar</div></div>
+      </div>
+      <div class="depo reveal">
+        <p>“Reduziu o tempo gasto na escolha de fornecedores, mantendo a qualidade dos produtos com os melhores preços. Podemos gastar nosso tempo com coisas mais estratégicas.”</p>
+        <div class="autor"><img class="avatar" src="https://www.foozi.com.br/img/pedro-miranda.webp" alt="Pedro Miranda" loading="lazy"><div class="info"><strong>Pedro Miranda</strong>Mangalô Café Bar</div></div>
+      </div>
+      <div class="depo reveal">
+        <p>“Se você quiser vender bem, você precisa comprar bem. Faz um favor para o seu tempo e a sua empresa: contrate a Foozi.”</p>
+        <div class="autor"><img class="avatar" src="https://www.foozi.com.br/img/elio.webp" alt="Elio Pimentel" loading="lazy"><div class="info"><strong>Elio Pimentel</strong>Home Sushi Home Vitória</div></div>
+      </div>
+    </div>
+
+    <p class="footnote reveal">Depoimentos públicos de clientes Foozi. Resultados variam conforme a operação, o volume de compras e o mix de insumos de cada estabelecimento.</p>
+  </div>
+</section>
+
+<!-- INCLUSO -->
+<section class="incluso">
+  <div class="container">
+    <h2 class="reveal">O que o Premium coloca na sua operação</h2>
+    <p class="intro reveal">Tudo do plano Avançado, a plataforma completa de cotações, mais a central de compras trabalhando por você.</p>
+
+    <div class="card-plano reveal">
+      <div class="plano-head">
+        <h3>
+          <svg class="gema" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9l4-6z" fill="#5B45E0"/><path d="M6 3l6 18L2 9l4-6zM18 3l-6 18L22 9l-4-6z" fill="#7A66F0"/></svg>
+          Premium
+        </h3>
+        <span class="pill">Tudo do plano Avançado e ainda:</span>
+      </div>
+      <ul class="beneficios">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Suas compras inteiras saem da sua mesa</strong><span>Serviço completo de BPO de compras, do início ao fim.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Meta de redução de custo cobrada todo mês</strong><span>Análise de economia potencial e metas mensais definidas com você.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Gente cujo único trabalho é comprar melhor pra você</strong><span>Time dedicado da Foozi realizando suas compras.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Pagar menos sem trocar de qualidade</strong><span>Otimização contínua do mix de fornecedores e produtos.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Decisão de compra com dado, não com pressa</strong><span>Gestão estratégica das compras da sua operação.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>O método das grandes redes, no seu tamanho</strong><span>Aplicação das melhores práticas de grandes centrais de compras.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Pedido errado e atraso viram problema nosso, não seu</strong><span>Acompanhamento da entrega junto aos fornecedores.</span></div></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Você vê em real quanto deixou de gastar</strong><span>Relatórios mensais com resultados e recomendações.</span></div></li>
+      </ul>
+      <div class="cta-area">
+        <a class="cta-principal" href="#diagnostico">Agendar diagnóstico de economia →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="num">2% a 30%</div>
+        <p>de economia nas compras mensais dos clientes Foozi, com impacto direto na redução do CMV.¹</p>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num">até 80%</div>
+        <p>de redução no tempo gasto por donos, gerentes e compradores com tarefas operacionais de compras.¹</p>
+      </div>
+    </div>
+    <p class="fonte-nota reveal">¹ Segundo dados da base de clientes Foozi. Resultados individuais variam conforme a operação.</p>
+  </div>
+</section>
+
+<!-- QUALIFICA -->
+<section class="qualifica">
+  <div class="container">
+    <h2 class="reveal">O Premium não é para todo mundo. E é melhor assim.</h2>
+    <div class="duas-colunas">
+      <div class="col-fit sim reveal">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#16A34A"/><path d="M16.5 9l-5.5 6-3-3" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Faz sentido pra você se:</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Você compra de vários fornecedores, toda semana, e quem cuida disso é você ou seu gerente</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Seu CMV está pesando e você sabe que dá pra comprar melhor. Mas não tem tempo de fazer isso direito</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Você quer manter a decisão final de cada compra. Só não quer mais fazer o trabalho</li>
+        </ul>
+      </div>
+      <div class="col-fit reveal">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#C9C3DE"/><path d="M9 9l6 6M15 9l-6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>Não faz sentido se:</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 9l6 6M15 9l-6 6" stroke="#C9C3DE" stroke-width="3" stroke-linecap="round"/></svg>Você quer apenas um software pra cotar por conta própria. Pra isso, o plano Avançado resolve e custa menos</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 9l6 6M15 9l-6 6" stroke="#C9C3DE" stroke-width="3" stroke-linecap="round"/></svg>Sua operação compra pouco volume ou de pouquíssimos fornecedores fixos</li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota-preco reveal">Investimento <strong>a partir de R$ 1.200/mês</strong>, conforme o tamanho da operação e número de CNPJs. Sem multa de cancelamento.</p>
+  </div>
+</section>
+
+<!-- ESCASSEZ -->
+<section class="escassez">
+  <div class="container">
+    <div class="escassez-card reveal">
+      <span class="tag">Turma de implementação</span>
+      <h2>As implementações do Premium acontecem em turmas mensais.</h2>
+      <p>Nosso time conduz a implementação de cada operação do início ao fim, e cada turma começa no início do mês. Quem agenda o diagnóstico agora entra na próxima turma. Quem deixa pra depois, espera o ciclo seguinte e adia um mês de economia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container narrow">
+    <h2 class="reveal">As perguntas que todo mundo faz antes de fechar</h2>
+
+    <details class="reveal">
+      <summary>Eu perco o controle das minhas compras?</summary>
+      <div class="resposta">Não. Toda compra passa pela sua aprovação antes de ser fechada. O que sai da sua mão é o trabalho de cotar, negociar e acompanhar. A decisão continua sendo sua.</div>
+    </details>
+    <details class="reveal">
+      <summary>Vocês trabalham com os meus fornecedores atuais?</summary>
+      <div class="resposta">Sim. A Foozi negocia com os fornecedores que você já usa e confia. E ainda coloca eles para competir com mais de 5.000 fornecedores parceiros, para você fechar sempre com a melhor condição.</div>
+    </details>
+    <details class="reveal">
+      <summary>Quanto eu posso economizar?</summary>
+      <div class="resposta">Nossos clientes economizam de 2% a 30% nas compras mensais, com impacto direto na redução do CMV. No diagnóstico inicial, calculamos a economia potencial da sua operação antes de você assinar qualquer coisa.</div>
+    </details>
+    <details class="reveal">
+      <summary>Existe fidelidade ou multa de cancelamento?</summary>
+      <div class="resposta">Não há multa de cancelamento. Trabalhamos para que o relatório mensal de economia seja o motivo de você ficar, não um contrato.</div>
+    </details>
+    <details class="reveal">
+      <summary>Quem entrega as mercadorias?</summary>
+      <div class="resposta">Os próprios fornecedores entregam, como hoje. A diferença é que o time da Foozi acompanha cada pedido junto ao fornecedor. Atraso e erro de entrega viram problema nosso de resolver, não seu.</div>
+    </details>
+  </div>
+</section>
+
+<!-- FORM (benchmark Toast: demo form embutido) -->
+<section class="form-section" id="diagnostico">
+  <div class="container form-grid">
+    <div class="form-copy">
+      <h2 class="reveal">Veja quanto sua operação pode economizar.</h2>
+      <p class="reveal">Agende o diagnóstico de economia potencial, gratuito e sem compromisso. Um especialista da Foozi analisa suas compras e te mostra o número antes de você decidir qualquer coisa.</p>
+      <ul>
+        <li class="reveal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Diagnóstico em uma conversa</strong>: sem apresentação enlatada, direto nas suas compras</div></li>
+        <li class="reveal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Número na mesa</strong>: economia potencial estimada da sua operação</div></li>
+        <li class="reveal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Decisão sua</strong>: sem multa, sem fidelidade, sem pressão</div></li>
+      </ul>
+      <div class="form-foto reveal">
+        <img src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=1000&q=75&auto=format&fit=crop" alt="Dono de restaurante sorrindo no balcão do seu estabelecimento" loading="lazy">
+        <div class="selo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="2"/><path d="M12 7v5l3 3" stroke="#16A34A" stroke-width="2" stroke-linecap="round"/></svg>Atendimento 24h, todos os dias</div>
+      </div>
+    </div>
+
+    <div class="form-card reveal">
+      <form id="form-diagnostico" novalidate>
+        <h3>Agende seu diagnóstico</h3>
+        <p class="sub">Resposta em horário comercial, geralmente no mesmo dia.</p>
+
+        <div class="campo">
+          <label for="nome">Nome e sobrenome*</label>
+          <input type="text" id="nome" name="nome" required autocomplete="name">
+        </div>
+        <div class="campo">
+          <label for="whatsapp">WhatsApp*</label>
+          <input type="tel" id="whatsapp" name="whatsapp" required autocomplete="tel" placeholder="(27) 99999-9999">
+        </div>
+        <div class="campo">
+          <label for="email">E-mail*</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="campo">
+          <label for="estabelecimento">Nome do estabelecimento*</label>
+          <input type="text" id="estabelecimento" name="estabelecimento" required autocomplete="organization">
+        </div>
+        <div class="campo">
+          <label for="cnpjs">Quantas unidades (CNPJs) você opera?*</label>
+          <select id="cnpjs" name="cnpjs" required>
+            <option value="" selected disabled>Selecione</option>
+            <option value="1">1 unidade</option>
+            <option value="2-5">2 a 5 unidades</option>
+            <option value="5-10">5 a 10 unidades</option>
+            <option value="10+">Mais de 10 unidades</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="volume">Quanto sua operação compra por mês, aproximadamente?*</label>
+          <select id="volume" name="volume" required>
+            <option value="" selected disabled>Selecione</option>
+            <option value="ate-20k">Até R$ 20 mil</option>
+            <option value="20-50k">R$ 20 mil a R$ 50 mil</option>
+            <option value="50-150k">R$ 50 mil a R$ 150 mil</option>
+            <option value="150k+">Mais de R$ 150 mil</option>
+          </select>
+        </div>
+
+        <!-- Campos ocultos de atribuição: preenchidos automaticamente via JS -->
+        <input type="hidden" name="utm_source" id="utm_source">
+        <input type="hidden" name="utm_medium" id="utm_medium">
+        <input type="hidden" name="utm_campaign" id="utm_campaign">
+        <input type="hidden" name="utm_content" id="utm_content">
+        <input type="hidden" name="utm_term" id="utm_term">
+        <input type="hidden" name="landing_page" id="landing_page">
+        <input type="hidden" name="referrer" id="referrer">
+
+        <button type="submit" class="cta-principal">Agendar diagnóstico de economia →</button>
+        <p class="privacidade">Ao enviar, você concorda com a <a href="https://www.foozi.com.br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a> da Foozi e autoriza o contato por WhatsApp e e-mail.</p>
+      </form>
+
+      <div class="form-sucesso" id="form-sucesso">
+        <h3>✅ Recebido!</h3>
+        <p>Um especialista da Foozi vai falar com você pelo WhatsApp. Se preferir adiantar, <a id="link-whats" href="https://wa.me/5527928340088">chame a gente agora</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Foozi. Todos os direitos reservados. · CNPJ 52.092.512/0001-29 · Vitória, ES</p>
+    <p><a href="https://www.foozi.com.br/politica-de-privacidade">Política de Privacidade</a> · <a href="https://www.foozi.com.br/termos-de-servico">Termos de serviço</a></p>
+    <p class="legal">¹ Faixas de economia e redução de tempo operacional baseadas em dados reportados pela base de clientes Foozi. Resultados individuais variam conforme volume de compras, mix de insumos e características de cada operação.</p>
+  </div>
+</footer>
+
+<script>
+/* Scroll reveal */
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* Dia da semana no headline = dia real em que o usuário entra na página */
+(function(){
+  const dias=['o domingo','a segunda-feira','a terça-feira','a quarta-feira','a quinta-feira','a sexta-feira','o sábado'];
+  document.getElementById('dia-semana').textContent=dias[new Date().getDay()];
+})();
+
+/* Atribuição: captura UTMs da URL + referrer nos campos ocultos.
+   Persiste em sessionStorage para sobreviver a navegação interna. */
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  keys.forEach(k=>{
+    const v=params.get(k)||sessionStorage.getItem(k)||'';
+    if(params.get(k))sessionStorage.setItem(k,params.get(k));
+    const el=document.getElementById(k);
+    if(el)el.value=v;
+  });
+  document.getElementById('landing_page').value=window.location.href.split('?')[0];
+  document.getElementById('referrer').value=document.referrer||sessionStorage.getItem('referrer')||'';
+  if(document.referrer)sessionStorage.setItem('referrer',document.referrer);
+})();
+
+/* Envio do formulário.
+   PRODUÇÃO: substituir este handler pelo embed/endpoint do formulário HubSpot
+   (Forms API ou hbspt.forms.create) mantendo os campos ocultos de UTM,
+   para que o lead caia direto no CRM com atribuição.
+   FALLBACK ATUAL: handoff estruturado via WhatsApp (speed-to-lead). */
+document.getElementById('form-diagnostico').addEventListener('submit',function(e){
+  e.preventDefault();
+  const f=e.target;
+  if(!f.checkValidity()){f.reportValidity();return;}
+  const d=Object.fromEntries(new FormData(f).entries());
+  const msg=encodeURIComponent(
+    'Olá! Quero agendar o diagnóstico de economia do plano Premium (BPO).\n\n'+
+    'Nome: '+d.nome+'\n'+
+    'Estabelecimento: '+d.estabelecimento+'\n'+
+    'Unidades (CNPJs): '+d.cnpjs+'\n'+
+    'Compras/mês: '+d.volume+'\n'+
+    'E-mail: '+d.email+'\n'+
+    'Origem: '+(d.utm_source||'direto')+(d.utm_campaign?(' / '+d.utm_campaign):'')
+  );
+  const url='https://wa.me/5527928340088?text='+msg;
+  document.getElementById('link-whats').href=url;
+  f.style.display='none';
+  document.getElementById('form-sucesso').style.display='block';
+  window.open(url,'_blank');
+});
+</script>
+</body>
+</html>

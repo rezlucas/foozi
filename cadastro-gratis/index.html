@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foozi — Crie sua conta grátis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --lime: #B6F23B;
+      --lime-deep: #9CDB1F;
+      --violet: #6B4EE6;
+      --violet-deep: #5538D9;
+      --ink: #15131F;
+      --muted: #6B6878;
+      --line: #E7E5EE;
+      --bg: #F6F5FB;
+      --card: #FFFFFF;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit
+    }
+
+    .wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0
+    }
+
+    .logo {
+      display: flex;
+      align-items: center
+    }
+
+    .logo img {
+      display: block;
+      height: 32px;
+      width: auto
+    }
+
+    .nav-tag {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .nav-tag b {
+      color: var(--ink)
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime-deep);
+      box-shadow: 0 0 0 0 rgba(156, 219, 31, .6);
+      animation: p 2s infinite
+    }
+
+    @keyframes p {
+      0% {
+        box-shadow: 0 0 0 0 rgba(156, 219, 31, .5)
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(156, 219, 31, 0)
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(156, 219, 31, 0)
+      }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 40px 0 70px
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(107, 78, 230, .08);
+      color: var(--violet);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 7px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px
+    }
+
+    .eyebrow svg {
+      width: 14px;
+      height: 14px
+    }
+
+    h1 {
+      font-size: clamp(34px, 4.6vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      font-weight: 800
+    }
+
+    h1 .mark {
+      position: relative;
+      white-space: nowrap
+    }
+
+    h1 .mark:after {
+      content: "";
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      bottom: 6px;
+      height: 14px;
+      background: var(--lime);
+      z-index: -1;
+      border-radius: 3px;
+      transform: rotate(-1deg)
+    }
+
+    .lead {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 22px 0 28px;
+      max-width: 480px
+    }
+
+    .benefits {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-bottom: 8px
+    }
+
+    .benefits li {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      font-size: 15.5px;
+      font-weight: 500
+    }
+
+    .benefits .ic {
+      flex: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--lime);
+      display: grid;
+      place-items: center;
+      margin-top: 1px
+    }
+
+    .benefits .ic svg {
+      width: 15px;
+      height: 15px
+    }
+
+    .benefits b {
+      font-weight: 700
+    }
+
+    .benefits small {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 13.5px
+    }
+
+    /* Form card */
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 34px 32px;
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 60px -28px rgba(40, 30, 90, .28);
+      position: relative
+    }
+
+    .form-card:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      padding: 1.5px;
+      background: linear-gradient(140deg, var(--lime), transparent 38%, transparent 62%, var(--violet));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: .45;
+      pointer-events: none
+    }
+
+    .fc-head {
+      margin-bottom: 22px
+    }
+
+    .fc-head h2 {
+      font-size: 22px;
+      letter-spacing: -.02em;
+      font-weight: 800
+    }
+
+    .fc-head p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 5px
+    }
+
+    .field {
+      margin-bottom: 15px
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      font: inherit;
+      font-size: 15px;
+      background: #fff;
+      color: var(--ink);
+      transition: .15s;
+      outline: none
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 4px rgba(107, 78, 230, .1)
+    }
+
+    .field input.err,
+    .field select.err {
+      border-color: #E5484D;
+      box-shadow: 0 0 0 4px rgba(229, 72, 77, .1)
+    }
+
+    .err-msg {
+      color: #E5484D;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+      font-weight: 600
+    }
+
+    .field.invalid .err-msg {
+      display: block
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: var(--violet);
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: .18s
+    }
+
+    .submit:hover {
+      background: var(--violet-deep);
+      transform: translateY(-1px)
+    }
+
+    .submit svg {
+      width: 18px;
+      height: 18px;
+      transition: .18s
+    }
+
+    .submit:hover svg {
+      transform: translateX(3px)
+    }
+
+    .fineprint {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+      line-height: 1.5
+    }
+
+    .fineprint a {
+      color: var(--violet);
+      font-weight: 600;
+      text-decoration: none
+    }
+
+    /* social proof bar */
+    .proof {
+      border-top: 1px solid var(--line);
+      margin-top: 18px;
+      padding-top: 60px
+    }
+
+    .proof-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      text-align: center
+    }
+
+    .stat b {
+      display: block;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1
+    }
+
+    .stat span {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .proof-divider {
+      width: 1px;
+      height: 38px;
+      background: var(--line)
+    }
+
+    /* success state */
+    .done {
+      display: none;
+      text-align: center;
+      padding: 18px 4px
+    }
+
+    .done.show {
+      display: block
+    }
+
+    .done .check {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--lime);
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center
+    }
+
+    .done .check svg {
+      width: 30px;
+      height: 30px
+    }
+
+    .done h2 {
+      font-size: 23px;
+      letter-spacing: -.02em;
+      margin-bottom: 8px
+    }
+
+    .done p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 22px
+    }
+
+    .form-body.hide {
+      display: none
+    }
+
+    @media(max-width:880px) {
+      .wrap {
+        padding-left: max(16px, env(safe-area-inset-left, 0px));
+        padding-right: max(16px, env(safe-area-inset-right, 0px));
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 36px
+      }
+
+      .nav-tag {
+        display: none
+      }
+
+      .proof-inner {
+        gap: 24px
+      }
+
+      .proof-divider {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="wrap">
+    <nav>
+      <div class="logo">
+        <img src="assets/logo_foozi.png" alt="Foozi" width="117" height="40">
+      </div>
+      <div class="nav-tag"><span class="pulse"></span>Cadastro <b>gratuito</b> · sem cartão</div>
+    </nav>
+  </header>
+
+  <main class="wrap hero">
+    <div class="hero-grid">
+
+      <!-- LEFT: pitch -->
+      <div>
+        <span class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="currentColor" />
+          </svg>
+          Você foi convidado a testar grátis
+        </span>
+        <h1>Compre melhor.<br>Pague menos pelos seus <span class="mark">insumos</span>.</h1>
+        <p class="lead">A Foozi cota com vários fornecedores de uma vez e te entrega o melhor preço. Tudo automático,
+          pelo WhatsApp.</p>
+
+        <ul class="benefits">
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12l4 4L19 6" stroke="#15131F" stroke-width="2.6" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg></span>
+            <div><b>Cotações automáticas</b><small>Dispare para vários fornecedores e feche com quem tem o melhor
+                preço.</small></div>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12l4 4L19 6" stroke="#15131F" stroke-width="2.6" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg></span>
+            <div><b>Economia de 2% a 30%</b><small>Compare preços e reduza seu CMV sem trocar de fornecedor.</small>
+            </div>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12l4 4L19 6" stroke="#15131F" stroke-width="2.6" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg></span>
+            <div><b>Menos tempo operacional</b><small>Pedidos, notas e histórico organizados em um só lugar.</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: form -->
+      <div class="form-card">
+        <div class="form-body" id="formBody">
+          <div class="fc-head">
+            <h2>Crie sua conta grátis</h2>
+            <p>Leva 30 segundos. Sem cartão de crédito.</p>
+          </div>
+
+          <div class="field" id="f-nome">
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" placeholder="Seu nome" autocomplete="name">
+            <span class="err-msg">Informe seu nome.</span>
+          </div>
+
+          <div class="field" id="f-telefone">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" type="tel" placeholder="(00) 00000-0000" inputmode="numeric" autocomplete="tel">
+            <span class="err-msg">Telefone inválido.</span>
+          </div>
+
+          <div class="field" id="f-email">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" placeholder="email@empresa.com" autocomplete="email">
+            <span class="err-msg">E-mail inválido.</span>
+          </div>
+
+          <div class="field" id="f-faturamento">
+            <label for="faturamento">Faturamento médio mensal</label>
+            <select id="faturamento">
+              <option value="">Selecione...</option>
+              <option value="abaixo_50">Abaixo de 50 mil reais</option>
+              <option value="50_70">Entre 50 e 70 mil reais</option>
+              <option value="80_140">Entre 80 a 140 mil reais</option>
+              <option value="150_300">Entre 150 a 300 mil reais</option>
+              <option value="acima_300">Mais de 300 mil reais</option>
+            </select>
+            <span class="err-msg">Selecione o faturamento médio mensal.</span>
+          </div>
+
+          <button class="submit" id="submitBtn">
+            Continuar e criar conta
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <p class="fineprint">Ao continuar você concorda com os <a href="#">Termos</a> e a <a href="#">Política de
+              Privacidade</a>.</p>
+        </div>
+
+        <!-- success -->
+        <div class="done" id="done">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12l4 4L19 6" stroke="#15131F" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <h2>Tudo certo, <span id="firstName">!</span></h2>
+          <p>Estamos te redirecionando para finalizar a criação da sua conta...</p>
+          <button class="submit" style="max-width:260px;margin:0 auto" onclick="location.reload()">Continuar</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- social proof -->
+    <section class="proof">
+      <div class="proof-inner">
+        <div class="stat"><b>+800</b><span>estabelecimentos ativos</span></div>
+        <div class="proof-divider"></div>
+        <div class="stat"><b>+5.000</b><span>fornecedores no Brasil</span></div>
+        <div class="proof-divider"></div>
+        <div class="stat"><b>+R$200mi</b><span>em compras /ano</span></div>
+        <div class="proof-divider"></div>
+        <div class="stat"><b>24h</b><span>de atendimento</span></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const phoneRegex = /^\(\d{2}\) (?:\d{4}-\d{4}|\d{5}-\d{4})$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const fields = {
+      nome: { el: $('nome'), wrap: $('f-nome'), test: v => v.trim().length >= 2 },
+      telefone: { el: $('telefone'), wrap: $('f-telefone'), test: v => phoneRegex.test(v.trim()) },
+      email: { el: $('email'), wrap: $('f-email'), test: v => emailRegex.test(v.trim()) },
+      faturamento: { el: $('faturamento'), wrap: $('f-faturamento'), test: v => v !== '' }
+    };
+
+    // máscara de telefone BR
+    fields.telefone.el.addEventListener('input', e => {
+      let d = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (d.length > 10) e.target.value = d.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+      else if (d.length > 6) e.target.value = d.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3').replace(/-$/, '');
+      else if (d.length > 2) e.target.value = d.replace(/(\d{2})(\d+)/, '($1) $2');
+      else e.target.value = d;
+    });
+
+    // limpa erro ao digitar
+    Object.values(fields).forEach(f => {
+      f.el.addEventListener('input', () => { f.wrap.classList.remove('invalid'); f.el.classList.remove('err'); });
+      f.el.addEventListener('change', () => { f.wrap.classList.remove('invalid'); f.el.classList.remove('err'); });
+    });
+
+    $('submitBtn').addEventListener('click', () => {
+      let ok = true, first = null;
+      Object.values(fields).forEach(f => {
+        if (!f.test(f.el.value)) {
+          f.wrap.classList.add('invalid'); f.el.classList.add('err');
+          if (!first) first = f.el; ok = false;
+        }
+      });
+      if (!ok) { first.focus(); return; }
+
+      const lead = {
+        nome: fields.nome.el.value.trim(),
+        telefone: fields.telefone.el.value.trim(),
+        email: fields.email.el.value.trim(),
+        faturamento: fields.faturamento.el.value
+      };
+      // Aqui você envia para seu backend / HubSpot antes do redirect:
+      // fetch('/api/lead', {method:'POST', body:JSON.stringify(lead)})
+      console.log('LEAD CAPTURADO →', lead);
+
+      $('firstName').textContent = lead.nome.split(' ')[0] + '!';
+      $('formBody').classList.add('hide');
+      $('done').classList.add('show');
+
+      // redirect para o cadastro real (ajuste a URL)
+      // setTimeout(()=>{ location.href = 'https://app.foozi.com.br/signup?' + new URLSearchParams(lead); }, 2500);
+    });
+  </script>
+</body>
+
+</html>
