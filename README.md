@@ -20,7 +20,7 @@ Cada landing page fica em sua própria pasta na raiz do projeto:
 ## Como criar uma nova LP
 
 1. Crie uma pasta na raiz com o nome da LP (ex: `promo-natal/`).
-2. Coloque o `index.html` (e demais arquivos) dentro dela.
+2. Coloque o `index.html` (e demais arquivos) dentro dela. Referencie CSS/JS/imagens da própria LP com caminho absoluto a partir da raiz (`/promo-natal/style.css`), nunca relativo (`style.css`) — a Vercel serve a LP em `/promo-natal` sem barra final, e um caminho relativo resolveria para a raiz do site em vez da pasta da LP.
 3. Faça commit e push para `main`.
 4. A Vercel faz o deploy automaticamente. A LP fica disponível em:
    - `https://<dominio-do-projeto>.vercel.app/promo-natal`
