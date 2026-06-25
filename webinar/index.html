@@ -3,25 +3,59 @@
 
 <head>
   <meta charset="UTF-8">
+  <!-- Meta Pixel Code -->
   <script>
-    (function () {
-      var base = document.createElement('base');
-      if (location.protocol === 'file:') {
-        base.href = location.href.slice(0, location.href.lastIndexOf('/') + 1);
-      } else {
-        var parts = location.pathname.split('/').filter(Boolean);
-        var webinarIndex = parts.indexOf('webinar');
-        base.href = webinarIndex !== -1
-          ? '/' + parts.slice(0, webinarIndex + 1).join('/') + '/'
-          : '/';
-      }
-      document.head.appendChild(base);
-    })();
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1046012496472284');
+    fbq('track', 'PageView');
   </script>
+  <!-- End Meta Pixel Code -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webinar Foozi — Demonstração ao vivo</title>
+  <title>Webinar Foozi — Demonstração ao vivo da plataforma de compras</title>
   <meta name="description"
-    content="Demonstração ao vivo da Foozi: plataforma + BPO de compras para restaurantes, hotéis, padarias e supermercados. 20 minutos, com o time da Foozi no chat.">
+    content="Participe do webinar gratuito da Foozi: veja a plataforma de compras funcionando ao vivo, tire dúvidas no chat e ganhe 3 cotações grátis ao ficar até o final.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#5041c3">
+  <meta name="author" content="Foozi">
+  <meta name="application-name" content="Foozi Webinar">
+
+  <link rel="icon" href="uploads/favicon.ico" sizes="any">
+  <link rel="icon" href="uploads/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="uploads/favicon.ico">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Foozi">
+  <meta property="og:title" content="Webinar Foozi — Demonstração ao vivo da plataforma de compras">
+  <meta property="og:description"
+    content="Veja a Foozi ao vivo em 20 minutos: plataforma + BPO de compras para restaurantes, hotéis, padarias e supermercados. Inscrição gratuita.">
+  <meta property="og:image" content="uploads/apresentacao_foozi.gif">
+  <meta property="og:image:alt" content="Demonstração da plataforma Foozi">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webinar Foozi — Demonstração ao vivo da plataforma de compras">
+  <meta name="twitter:description"
+    content="Veja a Foozi ao vivo em 20 minutos. Inscrição gratuita — ganhe 3 cotações ao ficar até o final.">
+  <meta name="twitter:image" content="uploads/apresentacao_foozi.gif">
+  <meta name="twitter:image:alt" content="Demonstração da plataforma Foozi">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -31,16 +65,19 @@
 </head>
 
 <body>
+  <!-- Meta Pixel Code -->
+  <noscript>
+    <img height="1" width="1" style="display:none" alt=""
+      src="https://www.facebook.com/tr?id=1046012496472284&ev=PageView&noscript=1">
+  </noscript>
+  <!-- End Meta Pixel Code -->
   <div class="page">
 
     <!-- NAV -->
     <header class="site-header">
       <div class="container site-header__inner">
         <img class="logo" src="uploads/logo_foozi.svg" alt="Foozi" width="117" height="40">
-        <span class="badge-header">
-          <span class="badge-header__dot"></span>
-          <span>Webinar ao vivo</span>
-        </span>
+        <a class="btn-cta btn-cta--header" href="#inscricao">Garantir vaga</a>
       </div>
     </header>
 
@@ -99,6 +136,16 @@
               <span class="form-head__title">Garanta sua vaga gratuita</span>
             </div>
             <div class="form-body form-body--demio">
+              <div class="form-loader" aria-live="polite" aria-busy="true">
+                <div class="form-loader__spinner" aria-hidden="true"></div>
+                <p class="form-loader__text">Carregando formulário...</p>
+                <div class="form-loader__skeleton" aria-hidden="true">
+                  <span class="form-loader__line"></span>
+                  <span class="form-loader__line"></span>
+                  <span class="form-loader__line form-loader__line--short"></span>
+                  <span class="form-loader__line form-loader__line--btn"></span>
+                </div>
+              </div>
               <span
                 class="demio-embed-registration"
                 data-hash="prbOAU2RewEBUiYC"
@@ -150,6 +197,11 @@
             <h3 class="benefit-card__title">Saia com acesso grátis</h3>
             <p class="benefit-card__desc">Ficou até o final? Você ganha o plano gratuito com 3 cotações.</p>
           </article>
+        </div>
+        <div class="section-cta">
+          <a class="btn-cta" href="#inscricao">
+            Garantir minha vaga <span class="btn-cta__arrow" aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>
@@ -243,42 +295,21 @@
       <div class="container">
         <div class="site-footer__top">
           <div class="site-footer__brand">
-            <div class="site-footer__logo">
-              <div class="site-footer__logo-icon" aria-hidden="true">
-                <div class="site-footer__logo-dot"></div>
-              </div>
-              <span class="site-footer__logo-text">foozi</span>
-            </div>
+            <img
+              class="site-footer__logo-img"
+              src="uploads/logo_foozi_white.svg"
+              alt="Foozi"
+              width="117"
+              height="40"
+            >
             <p class="site-footer__desc">
               Plataforma e BPO de compras para restaurantes, hotéis, padarias e supermercados. Compre melhor, gaste
               menos tempo.
             </p>
           </div>
-          <div class="site-footer__links">
-            <div>
-              <div class="site-footer__col-title">Webinar</div>
-              <nav class="site-footer__col-list" aria-label="Links do webinar">
-                <a href="#inscricao">Inscreva-se</a>
-                <a href="#inscricao">Horários</a>
-                <a href="#inscricao">Como funciona</a>
-              </nav>
-            </div>
-            <div>
-              <div class="site-footer__col-title">Foozi</div>
-              <nav class="site-footer__col-list" aria-label="Links da Foozi">
-                <a href="#">Plataforma</a>
-                <a href="#">BPO de compras</a>
-                <a href="#">Planos</a>
-              </nav>
-            </div>
-          </div>
         </div>
         <div class="site-footer__bottom">
           <span>© 2026 Foozi. Todos os direitos reservados.</span>
-          <span class="site-footer__legal">
-            <a href="#">Termos</a>
-            <a href="#">Privacidade</a>
-          </span>
         </div>
       </div>
     </footer>

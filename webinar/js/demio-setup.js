@@ -2,6 +2,9 @@
   var container = document.querySelector('.form-body--demio');
   if (!container) return;
 
+  var loader = container.querySelector('.form-loader');
+  var FORM_SELECTORS = 'input, select, textarea, button, iframe, .demio-embed-form, .ant-form, .ant-btn';
+
   var PLACEHOLDER_MAP = {
     'select a session': 'Selecione uma sessão',
     'select session': 'Selecione uma sessão',
@@ -11,11 +14,10 @@
   };
 
   var SESSION_SELECTORS = [
-    'select option',
-    '.ant-select-item-option-content',
-    '.ant-select-selection-item',
-    '[class*="demio-embed-date"]',
-    '[role="option"]'
+    '[class*="demio-embed-date"] .ant-select-item-option-content',
+    '[class*="demio-embed-date"] .ant-select-selection-item',
+    '[class*="demio-embed-date"] select option',
+    '[class*="demio-embed-date"] [role="option"]'
   ].join(', ');
 
   function capitalize(text) {
@@ -31,13 +33,46 @@
     return PLACEHOLDER_MAP[key] || null;
   }
 
+  function isNonSessionField(element) {
+    var field = element.closest('.ant-form-item, .ant-row, [class*="demio-embed"]');
+    if (!field) return false;
+
+    var label = (field.textContent || '').toLowerCase();
+    return /faturamento|revenue|billing|faturamento m[eé]dio|monthly revenue/.test(label);
+  }
+
+  function isSessionFieldElement(element) {
+    if (isNonSessionField(element)) return false;
+    if (element.closest('[class*="demio-embed-date"]')) return true;
+
+    var field = element.closest('.ant-form-item, .ant-row, [class*="demio-embed"]');
+    if (!field) return false;
+
+    var label = (field.textContent || '').toLowerCase();
+    return /sess[aã]o|session|hor[aá]rio|quando|select a session|selecione uma sess/.test(label);
+  }
+
+  function looksLikeSessionDate(text) {
+    var lower = text.toLowerCase();
+
+    if (/faturamento|r\$|\$|milh|mil\b|revenue|billing|under|over|acima|abaixo|entre|até|monthly/.test(lower)) {
+      return false;
+    }
+
+    return /(monday|tuesday|wednesday|thursday|friday|saturday|sunday|segunda|ter[cç]a|quarta|quinta|sexta|s[aá]bado|domingo)/.test(lower)
+      || /\d{1,2}:\d{2}/.test(text)
+      || /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b/i.test(text)
+      || /\b(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\b/i.test(lower)
+      || /^\d{4}-\d{2}-\d{2}/.test(text);
+  }
+
   function parseSessionDate(text, fallbackValue) {
     if (fallbackValue) {
       var fromValue = Date.parse(fallbackValue);
       if (!isNaN(fromValue)) return new Date(fromValue);
     }
 
-    if (!text) return null;
+    if (!text || !looksLikeSessionDate(text)) return null;
 
     var cleaned = text.trim()
       .replace(/\s+(EST|EDT|CST|CDT|MST|MDT|PST|PDT|GMT|UTC|BRT|BRST|[A-Z]{2,5})$/i, '')
@@ -73,6 +108,7 @@
 
   function formatElement(element) {
     if (!element || element.dataset.formattedPtBr === '1') return;
+    if (!isSessionFieldElement(element)) return;
 
     var text = (element.textContent || '').trim();
     if (!text) return;
@@ -98,6 +134,27 @@
     element.dataset.formattedPtBr = '1';
   }
 
+  function formatActiveSessionDropdownOptions() {
+    var openSelect = container.querySelector('.ant-select-open, .ant-select-focused');
+    if (!openSelect || !isSessionFieldElement(openSelect)) return;
+
+    document.querySelectorAll('.ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option-content')
+      .forEach(formatElement);
+  }
+
+  function isFormLoaded() {
+    return !!container.querySelector(FORM_SELECTORS);
+  }
+
+  function hideLoader() {
+    if (!isFormLoaded()) return;
+
+    container.classList.add('form-body--demio--loaded');
+    if (loader) {
+      loader.setAttribute('aria-busy', 'false');
+    }
+  }
+
   function setBrazilAsDefault() {
     var countrySelect = container.querySelector('.PhoneInputCountrySelect');
     if (!countrySelect || countrySelect.value === 'BR') return;
@@ -108,12 +165,17 @@
   }
 
   function enhanceForm() {
+    hideLoader();
     setBrazilAsDefault();
     container.querySelectorAll(SESSION_SELECTORS).forEach(formatElement);
-    document.querySelectorAll('.ant-select-dropdown ' + SESSION_SELECTORS).forEach(formatElement);
+    formatActiveSessionDropdownOptions();
   }
 
   function watchForm() {
+    if (isFormLoaded()) {
+      hideLoader();
+    }
+
     enhanceForm();
 
     var observer = new MutationObserver(enhanceForm);
@@ -123,7 +185,12 @@
 
   var demioScript = document.getElementById('demio-js');
   if (demioScript) {
-    demioScript.addEventListener('load', enhanceForm);
+    demioScript.addEventListener('load', function () {
+      enhanceForm();
+      setTimeout(hideLoader, 100);
+      setTimeout(hideLoader, 500);
+      setTimeout(hideLoader, 1500);
+    });
   }
 
   watchForm();
