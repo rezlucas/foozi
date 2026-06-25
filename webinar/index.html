@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="/webinar/css/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <!-- NAV -->
     <header class="site-header">
       <div class="container site-header__inner">
-        <img class="logo" src="/webinar/uploads/logo_foozi.svg" alt="Foozi" width="117" height="40">
+        <img class="logo" src="uploads/logo_foozi.svg" alt="Foozi" width="117" height="40">
         <span class="badge-header">
           <span class="badge-header__dot"></span>
           <span>Webinar ao vivo</span>
@@ -67,14 +67,12 @@
           <div class="preview-thumb">
             <p class="preview-label">Prévia · veja um trecho</p>
             <div class="video-mock">
-              <div class="video-mock__overlay">
-                <div class="video-mock__play-wrap video-mock__play-wrap--sm">
-                  <span class="video-mock__pulse" aria-hidden="true"></span>
-                  <span class="video-mock__play video-mock__play--sm" aria-hidden="true">
-                    <span class="video-mock__triangle--sm"></span>
-                  </span>
-                </div>
-              </div>
+              <img
+                class="video-mock__media"
+                src="uploads/apresentacao_foozi.gif"
+                alt="Demonstração da plataforma Foozi"
+                loading="lazy"
+              >
               <span class="video-mock__tag">trecho do webinar · ~5s</span>
             </div>
           </div>
@@ -84,45 +82,18 @@
           <div class="form-card">
             <div class="form-head">
               <span class="form-head__title">Garanta sua vaga gratuita</span>
-              <span class="form-head__tag">iframe · Demio</span>
             </div>
-            <form class="form-body" action="#" method="post">
-              <div class="form-group">
-                <label class="form-label" for="sessao">Escolha o melhor horário</label>
-                <select class="form-field" id="sessao" name="sessao">
-                  <option value="" disabled selected>Selecione uma sessão</option>
-                  <option value="manha">Hoje · 10h</option>
-                  <option value="tarde">Hoje · 15h</option>
-                  <option value="noite">Hoje · 19h</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="nome">Nome completo</label>
-                <input class="form-field" type="text" id="nome" name="nome" placeholder="Seu nome"
-                  autocomplete="name">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="email">E-mail</label>
-                <input class="form-field" type="email" id="email" name="email" placeholder="voce@empresa.com.br"
-                  autocomplete="email">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="whatsapp">
-                  WhatsApp <span class="form-label__optional">(opcional)</span>
-                </label>
-                <input class="form-field" type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000"
-                  autocomplete="tel">
-              </div>
-              <label class="form-checkbox">
-                <input class="form-checkbox__input" type="checkbox" name="lembrete_whatsapp" value="1">
-                <span class="form-checkbox__text">Quero receber lembretes da sessão no WhatsApp</span>
-              </label>
-              <button class="form-submit" type="submit">Quero participar do webinar</button>
-              <p class="form-legal">
-                Ao se inscrever, você concorda com os <a href="#">termos</a> e a <a href="#">política de
-                  privacidade</a>.
-              </p>
-            </form>
+            <div class="form-body form-body--demio">
+              <span
+                class="demio-embed-registration"
+                data-hash="prbOAU2RewEBUiYC"
+                data-api="api/v1"
+                data-base-uri="https://my.demio.com/"
+                data-form-width="100%"
+                data-color="#5041c3"
+                data-text="CONFIRMAR PRESENÇA"
+              ></span>
+            </div>
           </div>
         </div>
       </div>
@@ -220,7 +191,7 @@
         <div class="host-photo">
           <div class="host-photo__deco" aria-hidden="true"></div>
           <div class="host-photo__frame">
-            <img class="host-photo__image" src="/webinar/uploads/isa_foozi.jpeg" alt="Isa, especialista Foozi" width="800"
+            <img class="host-photo__image" src="uploads/isa_foozi.jpeg" alt="Isa, especialista Foozi" width="800"
               height="800" loading="lazy">
           </div>
         </div>
@@ -310,6 +281,10 @@
     </footer>
 
   </div>
+
+  <script async id="demio-js" type="text/javascript"
+    src="https://cdn.demio.com/production/dashboard/embed.bundle.js"></script>
+  <script src="js/demio-setup.js"></script>
 </body>
 
 </html>

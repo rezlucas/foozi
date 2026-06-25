@@ -471,14 +471,15 @@ a {
   aspect-ratio: 16 / 9;
   border-radius: var(--fz-radius-md);
   overflow: hidden;
-  background: repeating-linear-gradient(
-    135deg,
-    var(--fz-video-bg-a),
-    var(--fz-video-bg-a) 13px,
-    var(--fz-video-bg-b) 13px,
-    var(--fz-video-bg-b) 26px
-  );
+  background: var(--fz-video-bg-a);
   border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.video-mock__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .video-mock--large {
@@ -627,12 +628,14 @@ a {
   justify-content: space-between;
   background: var(--fz-primary);
   padding: 14px 24px;
+  border-radius: var(--fz-radius-xl) var(--fz-radius-xl) 0 0;
 }
 
 .form-head__title {
   font-size: 14px;
   font-weight: 700;
   color: var(--fz-white);
+  line-height: 1.3;
 }
 
 .form-head__tag {
@@ -644,6 +647,46 @@ a {
 
 .form-body {
   padding: 24px 24px 26px;
+}
+
+.form-body--demio {
+  padding: 24px 24px 26px;
+  min-height: 200px;
+  line-height: 0;
+  background: var(--fz-white);
+}
+
+.form-body--demio .demio-embed-registration,
+.form-body--demio .demio-embed-form,
+.form-body--demio iframe {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  line-height: normal;
+}
+
+.form-body--demio .demio-embed-header,
+.form-body--demio .demio-embed-cover {
+  display: none !important;
+}
+
+.form-body--demio .ant-select-item-option-content,
+.form-body--demio .ant-select-selection-item,
+.form-body--demio select option,
+.form-body--demio [class*="demio-embed-date"],
+.form-body--demio [role="option"] {
+  white-space: pre-line;
+  line-height: 1.45;
+}
+
+.form-body--demio .ant-select-selection-item {
+  font-weight: 600;
+}
+
+.ant-select-dropdown .ant-select-item-option-content {
+  white-space: pre-line;
+  line-height: 1.45;
 }
 
 .form-group + .form-group {
@@ -1366,6 +1409,10 @@ a {
     padding: 20px 18px 22px;
   }
 
+  .form-body--demio {
+    padding: 20px 18px 22px;
+  }
+
   .form-card {
     border-radius: 16px;
     box-shadow: 0 20px 40px -18px rgba(20, 16, 60, 0.45);
@@ -1435,6 +1482,10 @@ a {
   }
 
   .form-body {
+    padding: 18px 16px 20px;
+  }
+
+  .form-body--demio {
     padding: 18px 16px 20px;
   }
 }
