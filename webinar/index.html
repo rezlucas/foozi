@@ -3,6 +3,21 @@
 
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      var base = document.createElement('base');
+      if (location.protocol === 'file:') {
+        base.href = location.href.slice(0, location.href.lastIndexOf('/') + 1);
+      } else {
+        var parts = location.pathname.split('/').filter(Boolean);
+        var webinarIndex = parts.indexOf('webinar');
+        base.href = webinarIndex !== -1
+          ? '/' + parts.slice(0, webinarIndex + 1).join('/') + '/'
+          : '/';
+      }
+      document.head.appendChild(base);
+    })();
+  </script>
   <!-- Meta Pixel Code -->
   <script>
     !function (f, b, e, v, n, t, s) {
