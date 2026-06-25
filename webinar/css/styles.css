@@ -800,56 +800,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   11. Agenda
-   -------------------------------------------------------------------------- */
-.agenda-grid {
-  margin-top: 42px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.agenda-card {
-  display: flex;
-  gap: 18px;
-  padding: 26px;
-  border: 1px solid #ececf6;
-  border-radius: var(--fz-radius-lg);
-  background: #fbfbfe;
-}
-
-.agenda-card__num {
-  flex: none;
-  font-family: var(--fz-font-mono);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--fz-primary);
-  background: var(--fz-primary-light);
-  width: 42px;
-  height: 42px;
-  border-radius: var(--fz-radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.agenda-card__title {
-  margin: 2px 0 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--fz-ink);
-  letter-spacing: -0.01em;
-}
-
-.agenda-card__desc {
-  margin: 8px 0 0;
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--fz-muted);
-}
-
-/* --------------------------------------------------------------------------
-   12. Benefits
+   11. Benefits
    -------------------------------------------------------------------------- */
 .section-intro {
   text-align: center;
@@ -904,23 +855,44 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   13. Host
+   13. Hosts
    -------------------------------------------------------------------------- */
-.host-grid {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 48px;
-  align-items: center;
+.hosts-intro {
+  max-width: 640px;
+  margin-bottom: 40px;
 }
 
-.host-photo {
+.hosts-intro__lead {
+  max-width: 58ch;
+}
+
+.hosts-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.host-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 28px;
+  align-items: center;
+  padding: 28px;
+  border: 1px solid var(--fz-border);
+  border-radius: var(--fz-radius-xl);
+  background: var(--fz-white);
+  box-shadow: 0 18px 40px -24px rgba(20, 16, 60, 0.35);
+}
+
+.host-featured__photo {
   position: relative;
 }
 
-.host-photo__deco {
+.host-featured__deco {
   position: absolute;
-  top: -14px;
-  left: -14px;
+  top: -12px;
+  left: -12px;
   width: 64px;
   height: 64px;
   border-radius: 16px;
@@ -928,7 +900,7 @@ a {
   opacity: 0.3;
 }
 
-.host-photo__frame {
+.host-featured__frame {
   position: relative;
   aspect-ratio: 4 / 5;
   border-radius: var(--fz-radius-xl);
@@ -936,11 +908,88 @@ a {
   border: 1px solid #e2e3f3;
 }
 
-.host-photo__image {
+.host-featured__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
+}
+
+.host-featured__tag,
+.host-support__tag {
+  display: inline-flex;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fz-primary);
+  background: var(--fz-primary-light);
+  padding: 5px 10px;
+  border-radius: var(--fz-radius-pill);
+}
+
+.host-featured__name,
+.host-support__name {
+  margin: 14px 0 0;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--fz-ink);
+  letter-spacing: -0.02em;
+}
+
+.host-featured__role,
+.host-support__role {
+  margin: 6px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fz-primary);
+}
+
+.host-featured__bio,
+.host-support__bio {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--fz-ink-soft);
+}
+
+.host-support {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid #e4e6f8;
+  border-radius: var(--fz-radius-xl);
+  background: var(--fz-lavender);
+}
+
+.host-support__photo-wrap {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--fz-white);
+  box-shadow: 0 10px 24px -14px rgba(80, 65, 195, 0.55);
+  flex: none;
+}
+
+.host-support__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.host-support__body {
+  margin-top: 20px;
+}
+
+.host-support__name {
+  font-size: 22px;
+}
+
+.host-support__bio {
+  font-size: 14.5px;
 }
 
 .badge-host {
@@ -953,49 +1002,6 @@ a {
   padding: 6px 12px;
   border-radius: var(--fz-radius-pill);
   text-transform: uppercase;
-}
-
-.host-bio {
-  margin: 16px 0 0;
-  font-size: 16.5px;
-  line-height: 1.6;
-  color: var(--fz-ink-soft);
-}
-
-.host-card {
-  margin-top: 22px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 18px;
-  border: 1px solid #ececf6;
-  border-radius: var(--fz-radius-md);
-  background: #fbfbfe;
-}
-
-.host-card__avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: var(--fz-primary);
-  color: var(--fz-white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 16px;
-  flex: none;
-}
-
-.host-card__name {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--fz-ink);
-}
-
-.host-card__role {
-  font-size: 13px;
-  color: var(--fz-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -1233,25 +1239,27 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .agenda-grid {
-    grid-template-columns: 1fr;
-  }
-
   .benefits-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .host-grid {
+  .hosts-showcase {
     grid-template-columns: 1fr;
+  }
+
+  .host-featured {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-inline: auto;
+  }
+
+  .host-support {
+    max-width: 520px;
+    margin-inline: auto;
   }
 
   .offer-inner {
     grid-template-columns: 1fr;
-  }
-
-  .host-photo {
-    max-width: 360px;
-    margin-inline: auto;
   }
 }
 
@@ -1329,23 +1337,22 @@ a {
     gap: 10px;
   }
 
-  .agenda-grid {
-    gap: 14px;
-    margin-top: 32px;
+  .hosts-intro {
+    margin-bottom: 32px;
   }
 
-  .agenda-card {
-    padding: 20px;
-    gap: 14px;
+  .host-featured {
+    padding: 22px;
+    gap: 22px;
   }
 
-  .host-grid {
-    gap: 28px;
-  }
-
-  .host-photo__deco {
+  .host-featured__deco {
     left: 0;
     top: -10px;
+  }
+
+  .host-featured__name {
+    font-size: 24px;
   }
 
   .preview-thumb {
