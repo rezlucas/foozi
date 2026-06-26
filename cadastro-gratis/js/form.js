@@ -72,7 +72,7 @@ function buildHubspotFields(lead) {
     { name: 'email', value: lead.email },
     { name: 'phone', value: lead.telefone },
     { name: 'faturamento_medio_mensal', value: lead.faturamento },
-    { name: 'trigger_campanha', value: "Step 1" },
+    { name: 'trigger_formulario', value: "Step 1" },
   ];
 
   LeadStorage.UTM_KEYS.forEach(key => {
