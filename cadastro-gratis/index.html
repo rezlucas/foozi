@@ -61,7 +61,8 @@
 
     .logo {
       display: flex;
-      align-items: center
+      align-items: center;
+      text-decoration: none
     }
 
     .logo img {
@@ -431,6 +432,25 @@
       display: none
     }
 
+    .submit:disabled {
+      opacity: .7;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .submit-error {
+      display: none;
+      color: #E5484D;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 12px
+    }
+
+    .submit-error.show {
+      display: block
+    }
+
     @media(max-width:880px) {
       .wrap {
         padding-left: max(16px, env(safe-area-inset-left, 0px));
@@ -461,9 +481,9 @@
 
   <header class="wrap">
     <nav>
-      <div class="logo">
-        <img src="/cadastro-gratis/assets/logo_foozi.png" alt="Foozi" width="117" height="40">
-      </div>
+      <a class="logo" href="https://www.foozi.com.br/" aria-label="Foozi">
+        <img src="assets/logo_foozi.png" alt="Foozi" width="117" height="40">
+      </a>
       <div class="nav-tag"><span class="pulse"></span>Cadastro <b>gratuito</b> · sem cartão</div>
     </nav>
   </header>
@@ -541,22 +561,29 @@
             <label for="faturamento">Faturamento médio mensal</label>
             <select id="faturamento">
               <option value="">Selecione...</option>
-              <option value="abaixo_50">Abaixo de 50 mil reais</option>
-              <option value="50_70">Entre 50 e 70 mil reais</option>
-              <option value="80_140">Entre 80 a 140 mil reais</option>
-              <option value="150_300">Entre 150 a 300 mil reais</option>
-              <option value="acima_300">Mais de 300 mil reais</option>
+              <option value="Abaixo de 50 mil reais">Abaixo de 50 mil reais</option>
+              <option value="Entre 50 e 70 mil reais">Entre 50 e 70 mil reais</option>
+              <option value="Entre 80 a 140 mil reais">Entre 80 a 140 mil reais</option>
+              <option value="Entre 150 a 300 mil reais">Entre 150 a 300 mil reais</option>
+              <option value="Mais de 300 mil reais">Mais de 300 mil reais</option>
             </select>
             <span class="err-msg">Selecione o faturamento médio mensal.</span>
           </div>
 
-          <button class="submit" id="submitBtn">
+          <input type="hidden" id="utm_term" name="utm_term" value="">
+          <input type="hidden" id="utm_source" name="utm_source" value="">
+          <input type="hidden" id="utm_campaign" name="utm_campaign" value="">
+          <input type="hidden" id="utm_content" name="utm_content" value="">
+          <input type="hidden" id="utm_medium" name="utm_medium" value="">
+
+          <button class="submit" id="submitBtn" type="button">
             Continuar e criar conta
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
           </button>
+          <p class="submit-error" id="submitError">Não foi possível enviar. Tente novamente.</p>
           <p class="fineprint">Ao continuar você concorda com os <a href="#">Termos</a> e a <a href="#">Política de
               Privacidade</a>.</p>
         </div>
@@ -568,8 +595,8 @@
                 stroke-linejoin="round" />
             </svg></div>
           <h2>Tudo certo, <span id="firstName">!</span></h2>
-          <p>Estamos te redirecionando para finalizar a criação da sua conta...</p>
-          <button class="submit" style="max-width:260px;margin:0 auto" onclick="location.reload()">Continuar</button>
+          <p id="doneMessage">Estamos te redirecionando para finalizar a criação da sua conta...</p>
+          <button class="submit" id="continueBtn" style="max-width:260px;margin:0 auto" type="button">Continuar</button>
         </div>
       </div>
 
@@ -589,60 +616,8 @@
     </section>
   </main>
 
-  <script>
-    const $ = id => document.getElementById(id);
-    const phoneRegex = /^\(\d{2}\) (?:\d{4}-\d{4}|\d{5}-\d{4})$/;
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const fields = {
-      nome: { el: $('nome'), wrap: $('f-nome'), test: v => v.trim().length >= 2 },
-      telefone: { el: $('telefone'), wrap: $('f-telefone'), test: v => phoneRegex.test(v.trim()) },
-      email: { el: $('email'), wrap: $('f-email'), test: v => emailRegex.test(v.trim()) },
-      faturamento: { el: $('faturamento'), wrap: $('f-faturamento'), test: v => v !== '' }
-    };
-
-    // máscara de telefone BR
-    fields.telefone.el.addEventListener('input', e => {
-      let d = e.target.value.replace(/\D/g, '').slice(0, 11);
-      if (d.length > 10) e.target.value = d.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-      else if (d.length > 6) e.target.value = d.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3').replace(/-$/, '');
-      else if (d.length > 2) e.target.value = d.replace(/(\d{2})(\d+)/, '($1) $2');
-      else e.target.value = d;
-    });
-
-    // limpa erro ao digitar
-    Object.values(fields).forEach(f => {
-      f.el.addEventListener('input', () => { f.wrap.classList.remove('invalid'); f.el.classList.remove('err'); });
-      f.el.addEventListener('change', () => { f.wrap.classList.remove('invalid'); f.el.classList.remove('err'); });
-    });
-
-    $('submitBtn').addEventListener('click', () => {
-      let ok = true, first = null;
-      Object.values(fields).forEach(f => {
-        if (!f.test(f.el.value)) {
-          f.wrap.classList.add('invalid'); f.el.classList.add('err');
-          if (!first) first = f.el; ok = false;
-        }
-      });
-      if (!ok) { first.focus(); return; }
-
-      const lead = {
-        nome: fields.nome.el.value.trim(),
-        telefone: fields.telefone.el.value.trim(),
-        email: fields.email.el.value.trim(),
-        faturamento: fields.faturamento.el.value
-      };
-      // Aqui você envia para seu backend / HubSpot antes do redirect:
-      // fetch('/api/lead', {method:'POST', body:JSON.stringify(lead)})
-      console.log('LEAD CAPTURADO →', lead);
-
-      $('firstName').textContent = lead.nome.split(' ')[0] + '!';
-      $('formBody').classList.add('hide');
-      $('done').classList.add('show');
-
-      // redirect para o cadastro real (ajuste a URL)
-      // setTimeout(()=>{ location.href = 'https://app.foozi.com.br/signup?' + new URLSearchParams(lead); }, 2500);
-    });
-  </script>
+  <script src="js/lead-storage.js"></script>
+  <script src="js/form.js"></script>
 </body>
 
 </html>
