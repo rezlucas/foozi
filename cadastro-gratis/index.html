@@ -3,6 +3,20 @@
 
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      var path = window.location.pathname;
+      var marker = '/cadastro-gratis';
+      var idx = path.indexOf(marker);
+      var href = idx !== -1
+        ? path.slice(0, idx + marker.length) + '/'
+        : (path.endsWith('/') ? path : path.replace(/[^/]*$/, '') || '/');
+      var base = document.createElement('base');
+      base.href = href;
+      document.head.appendChild(base);
+      window.FOOZI_BASE = href;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Foozi — Crie sua conta grátis</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -616,8 +630,8 @@
     </section>
   </main>
 
-  <script src="js/lead-storage.js"></script>
-  <script src="js/form.js"></script>
+  <script src="js/lead-storage.js" onerror="console.error('[cadastro-gratis] Falha ao carregar js/lead-storage.js')"></script>
+  <script src="js/form.js" onerror="console.error('[cadastro-gratis] Falha ao carregar js/form.js')"></script>
 </body>
 
 </html>
