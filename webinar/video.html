@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <script>
+    (function () {
+      var base = document.createElement('base');
+      if (location.protocol === 'file:') {
+        base.href = location.href.slice(0, location.href.lastIndexOf('/') + 1);
+      } else {
+        var parts = location.pathname.split('/').filter(Boolean);
+        var webinarIndex = parts.indexOf('webinar');
+        base.href = webinarIndex !== -1
+          ? '/' + parts.slice(0, webinarIndex + 1).join('/') + '/'
+          : '/';
+      }
+      document.head.appendChild(base);
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Foozi — Assistir</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#5041c3">
+  <link rel="icon" href="uploads/favicon.ico" sizes="any">
+  <link rel="icon" href="uploads/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="page page--video">
+
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="index.html"><img class="logo" src="uploads/logo_foozi.svg" alt="Foozi" width="117" height="40"></a>
+      </div>
+    </header>
+
+    <main class="video-page">
+      <div class="container video-page__inner">
+        <div class="video-page__intro">
+          <span class="badge-host">Tour Foozi · 16 min</span>
+          <h1 class="video-page__title">Sua demonstração está pronta<span id="video-greeting"></span></h1>
+          <p class="video-page__lead">Assista no seu ritmo. Ao final, você verá como acessar a plataforma ou conhecer o BPO Foozi.</p>
+        </div>
+
+        <div class="video-player-wrap">
+          <div class="video-player-placeholder" id="video-player">
+            <p class="video-player-placeholder__text">Player do vídeo em breve</p>
+            <p class="video-player-placeholder__hint">Substitua este bloco pelo embed do vídeo (Vimeo, Wistia, etc.)</p>
+          </div>
+        </div>
+
+        <div class="video-page__paths">
+          <article class="path-card">
+            <span class="path-card__tag">Quer testar</span>
+            <h2 class="path-card__title">Plataforma</h2>
+            <p class="path-card__desc">Acesso gratuito com 3 cotações. Aplique o que aprendeu no vídeo. Ao contratar, treinamento e implementação.</p>
+            <a class="btn-cta btn-cta--on-light btn-cta--block" href="#">Acessar plataforma</a>
+          </article>
+          <article class="path-card path-card--featured">
+            <span class="path-card__tag">Sem tempo para operar</span>
+            <h2 class="path-card__title">BPO Foozi</h2>
+            <p class="path-card__desc">Nossa equipe faz as compras por você. Você só aprova.</p>
+            <a class="btn-cta btn-cta--block" href="#">Conhecer o BPO</a>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__bottom">
+          <span>© 2026 Foozi. Todos os direitos reservados.</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/video-page.js"></script>
+</body>
+
+</html>
