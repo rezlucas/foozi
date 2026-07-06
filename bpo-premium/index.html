@@ -3,10 +3,27 @@
 
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      var base = document.createElement('base');
+      if (location.protocol === 'file:') {
+        base.href = location.href.slice(0, location.href.lastIndexOf('/') + 1);
+      } else {
+        var parts = location.pathname.split('/').filter(Boolean);
+        var pageIndex = parts.indexOf('bpo-premium');
+        base.href = pageIndex !== -1
+          ? '/' + parts.slice(0, pageIndex + 1).join('/') + '/'
+          : '/';
+      }
+      document.head.appendChild(base);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Foozi Premium | BPO de Compras para Foodservice</title>
   <meta name="description"
     content="As redes grandes têm central de compras. No plano Premium, um time dedicado da Foozi assume sua compra do início ao fim — você aprova, a gente executa. Agende seu diagnóstico de economia gratuito.">
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
