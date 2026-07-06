@@ -174,7 +174,8 @@
                 </select>
                 <span class="form-error" id="faturamento-error" role="alert"></span>
               </div>
-              <button class="form-submit" type="submit">Assistir agora</button>
+              <button class="form-submit" id="submitBtn" type="submit">Assistir agora</button>
+              <p class="submit-error" id="submitError">Não foi possível enviar seu cadastro. Tente novamente.</p>
               <p class="form-legal">
                 Ao enviar, você concorda com nossos <a href="#">termos</a> e <a href="#">política de privacidade</a>.
               </p>
@@ -282,12 +283,12 @@
       </div>
     </section>
 
-    <!-- DOIS CAMINHOS -->
+    <!-- DEPOIS DO TOUR -->
     <section class="section section--white section--compact">
       <div class="container">
         <div class="section-intro">
           <span class="eyebrow">// Depois do tour</span>
-          <h2 class="h2-section h2-section--sm">Plataforma ou BPO — você escolhe</h2>
+          <h2 class="h2-section h2-section--sm">É só continuar na plataforma</h2>
         </div>
         <div class="paths-grid">
           <article class="path-card">
@@ -296,13 +297,6 @@
             <p class="path-card__desc">
               Acesso gratuito com 3 cotações — você aplica o que aprendeu no tour. Ao contratar, treinamento e
               implementação com nosso time.
-            </p>
-          </article>
-          <article class="path-card path-card--featured">
-            <span class="path-card__tag">Para quem não tem tempo</span>
-            <h3 class="path-card__title">BPO Foozi</h3>
-            <p class="path-card__desc">
-              Nossa equipe usa a plataforma e faz cotação e compras por você. Você aprova, a gente executa.
             </p>
           </article>
         </div>
@@ -353,7 +347,7 @@
               <h3 class="host-support__name">Isa</h3>
               <p class="host-support__role">Especialista Foozi</p>
               <p class="host-support__bio">
-                Abre com a dor real da operação e fecha apresentando a plataforma com acesso gratuito ou o BPO.
+                Abre com a dor real da operação e fecha apresentando a plataforma com acesso gratuito.
               </p>
             </div>
           </article>
@@ -372,7 +366,7 @@
               Saia do manual. Cote todos os fornecedores no automático.
             </h2>
             <p class="offer-desc">Veja como usar a plataforma na prática e conseguir os melhores preços — sem planilha,
-              sem WhatsApp um por um. Ao final, você escolhe: acessar com cotações gratuitas ou conhecer o BPO.</p>
+              sem WhatsApp um por um. Ao final, você acessa com cotações gratuitas.</p>
           </div>
           <div class="offer-cta">
             <a class="btn-cta" href="#inscricao">
@@ -389,7 +383,7 @@
           <div class="site-footer__brand">
             <img class="site-footer__logo-img" src="uploads/logo_foozi_white.svg" alt="Foozi" width="117" height="40">
             <p class="site-footer__desc">
-              Plataforma e BPO de compras para bares, restaurantes, hotéis e padarias. Compre melhor, gaste
+              Plataforma de compras para bares, restaurantes, hotéis e padarias. Compre melhor, gaste
               menos tempo.
             </p>
           </div>

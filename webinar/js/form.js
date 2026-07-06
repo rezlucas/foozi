@@ -1,4 +1,10 @@
 (function () {
+  var HUBSPOT = {
+    portalId: '47154604',
+    formId: '3f31df29-2a8e-4053-8ac4-2c11bd6efe12',
+    endpoint: 'https://api.hsforms.com/submissions/v3/integration/submit'
+  };
+
   var form = document.getElementById('lead-form');
   if (!form) return;
 
@@ -6,6 +12,8 @@
   var email = form.querySelector('#email');
   var phone = form.querySelector('#phone');
   var faturamento = form.querySelector('#faturamento_mensal');
+  var submitBtn = document.getElementById('submitBtn');
+  var submitError = document.getElementById('submitError');
 
   var fields = [
     { el: firstname, errorId: 'firstname-error', validate: validateFirstname },
@@ -96,6 +104,84 @@
     return isValid;
   }
 
+  function splitName(fullName) {
+    var parts = fullName.trim().split(/\s+/);
+    return {
+      firstname: parts[0] || '',
+      lastname: parts.slice(1).join(' ')
+    };
+  }
+
+  function getHubspotUtk() {
+    var match = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
+    return match ? match[1] : '';
+  }
+
+  function getUtms() {
+    var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    var params = new URLSearchParams(window.location.search);
+    var utms = {};
+
+    keys.forEach(function (key) {
+      var fromUrl = params.get(key);
+      if (fromUrl) sessionStorage.setItem(key, fromUrl);
+      utms[key] = fromUrl || sessionStorage.getItem(key) || '';
+    });
+
+    return utms;
+  }
+
+  function buildHubspotFields(lead) {
+    var name = splitName(lead.firstname);
+    var submittedFields = [
+      { name: 'firstname', value: name.firstname },
+      { name: 'lastname', value: name.lastname },
+      { name: 'email', value: lead.email },
+      { name: 'phone', value: lead.phone },
+      { name: 'faturamento_medio_mensal', value: lead.faturamento },
+      { name: 'trigger_formulario', value: 'Webinar - Step 1' }
+    ];
+
+    Object.keys(lead.utms).forEach(function (key) {
+      if (lead.utms[key]) submittedFields.push({ name: key, value: lead.utms[key] });
+    });
+
+    return submittedFields;
+  }
+
+  function submitToHubspot(lead) {
+    var submittedFields = buildHubspotFields(lead);
+    var hutk = getHubspotUtk();
+    var context = {
+      pageUri: window.location.href,
+      pageName: document.title
+    };
+    if (hutk) context.hutk = hutk;
+
+    return fetch(HUBSPOT.endpoint + '/' + HUBSPOT.portalId + '/' + HUBSPOT.formId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        submittedAt: Date.now(),
+        fields: submittedFields,
+        context: context,
+        legalConsentOptions: {
+          consent: {
+            consentToProcess: true,
+            text: 'Ao continuar você concorda com os Termos e a Política de Privacidade.'
+          }
+        }
+      })
+    }).then(function (response) {
+      if (!response.ok) {
+        return response.json().catch(function () { return {}; }).then(function (error) {
+          throw new Error(error.message || 'Erro ao enviar formulário');
+        });
+      }
+      return response.json();
+    });
+  }
+
   phone.addEventListener('input', function () {
     var cursorFromEnd = phone.value.length - phone.selectionStart;
     phone.value = maskPhone(phone.value);
@@ -133,12 +219,32 @@
       return;
     }
 
-    // TODO: integrar com HubSpot (hbspt.forms.submit ou fetch para API)
-    if (typeof fbq === 'function') {
-      fbq('track', 'Lead');
-    }
+    if (submitError) submitError.classList.remove('show');
 
-    var params = new URLSearchParams(new FormData(form));
-    window.location.href = 'video.html?' + params.toString();
+    var lead = {
+      firstname: firstname.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim(),
+      faturamento: faturamento.value,
+      utms: getUtms()
+    };
+
+    var originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    submitToHubspot(lead).then(function () {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead');
+      }
+
+      var params = new URLSearchParams(new FormData(form));
+      window.location.href = 'video.html?' + params.toString();
+    }).catch(function (err) {
+      console.error('HubSpot submit error:', err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+      if (submitError) submitError.classList.add('show');
+    });
   });
 })();
