@@ -212,7 +212,6 @@
         form.style.display = 'none';
         var success = card && card.querySelector('.form-sucesso');
         if (success) success.style.display = 'block';
-        window.open(url, '_blank');
 
         if (submitBtn) {
           submitBtn.disabled = false;

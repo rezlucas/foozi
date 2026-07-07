@@ -5,41 +5,15 @@ const HUBSPOT = {
 };
 
 const SIGNUP_URL = 'https://app.foozi.com.br/auth/sign-up';
-const REDIRECT_SECONDS = 3;
 
 const $ = id => document.getElementById(id);
 const phoneRegex = /^\(\d{2}\) (?:\d{4}-\d{4}|\d{5}-\d{4})$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 let fields;
-let redirectInterval = null;
 
 function goToSignup() {
-  if (redirectInterval) {
-    clearInterval(redirectInterval);
-    redirectInterval = null;
-  }
   location.href = SIGNUP_URL;
-}
-
-function startRedirectCountdown() {
-  const continueBtn = $('continueBtn');
-  if (!continueBtn) {
-    setTimeout(goToSignup, REDIRECT_SECONDS * 1000);
-    return;
-  }
-
-  let seconds = REDIRECT_SECONDS;
-  continueBtn.textContent = `Continuar (${seconds})`;
-
-  redirectInterval = setInterval(() => {
-    seconds -= 1;
-    if (seconds <= 0) {
-      goToSignup();
-      return;
-    }
-    continueBtn.textContent = `Continuar (${seconds})`;
-  }, 1000);
 }
 
 function splitName(fullName) {
@@ -130,7 +104,7 @@ function showSuccessState(lead, result) {
   const doneMessage = $('doneMessage');
   if (doneMessage) {
     doneMessage.innerHTML = result.inlineMessage
-      || 'Estamos te redirecionando para finalizar a criação da sua conta...';
+      || 'Recebemos seu cadastro! Clique em continuar para criar sua senha e acessar a plataforma.';
   }
 
   $('formBody').classList.add('hide');
@@ -199,7 +173,6 @@ function setupSubmit() {
       LeadStorage.save(lead);
 
       showSuccessState(lead, result);
-      startRedirectCountdown();
     } catch (err) {
       console.error('HubSpot submit error:', err);
       $('submitError').classList.add('show');
