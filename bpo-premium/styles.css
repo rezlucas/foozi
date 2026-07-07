@@ -18,6 +18,11 @@
   box-sizing: border-box
 }
 
+::selection {
+  background: var(--roxo);
+  color: #fff
+}
+
 html {
   scroll-behavior: smooth
 }
@@ -208,7 +213,8 @@ h3 {
   display: block
 }
 
-.dia-semana {
+.dia-semana,
+.grifo {
   position: relative;
   display: inline-block
 }
@@ -217,7 +223,7 @@ h3 {
   white-space: nowrap
 }
 
-.dia-semana .sublinhado {
+.sublinhado {
   position: absolute;
   left: 0;
   bottom: -2px;
@@ -1093,6 +1099,52 @@ select.form-field:invalid {
 
 .footer a {
   color: var(--cinza)
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto 20px
+}
+
+.footer-social__title {
+  width: 100%;
+  font-weight: 700;
+  color: var(--tinta);
+  margin-bottom: 12px
+}
+
+.footer-social__links {
+  display: flex;
+  align-items: center;
+  gap: 24px
+}
+
+.footer-social__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--tinta);
+  font-weight: 600;
+  text-decoration: none
+}
+
+.footer-social__link:hover {
+  color: var(--roxo)
+}
+
+.footer-social__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--roxo-claro);
+  color: var(--roxo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0
 }
 
 .footer .legal {
