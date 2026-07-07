@@ -197,18 +197,7 @@
       }).then(function () {
         if (typeof fbq === 'function') fbq('track', 'Lead');
 
-        var msg = encodeURIComponent(
-          'Olá! Quero agendar o diagnóstico de economia do plano Premium (BPO).\n\n' +
-          'Nome: ' + d.firstname + '\n' +
-          'E-mail: ' + d.email + '\n' +
-          'WhatsApp: ' + d.phone + '\n' +
-          'Faturamento mensal: ' + d.faturamento_mensal + '\n' +
-          'Origem: ' + (d.utm_source || 'direto') + (d.utm_campaign ? (' / ' + d.utm_campaign) : '')
-        );
-        var url = 'https://wa.me/5527928340088?text=' + msg;
         var card = form.closest('.form-card') || form.parentElement;
-        var link = card && card.querySelector('.link-whats');
-        if (link) link.href = url;
         form.style.display = 'none';
         var success = card && card.querySelector('.form-sucesso');
         if (success) success.style.display = 'block';
