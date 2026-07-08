@@ -139,7 +139,7 @@
       { name: 'email', value: lead.email },
       { name: 'phone', value: lead.phone },
       { name: 'faturamento_medio_mensal', value: lead.faturamento },
-      { name: 'trigger_formulario', value: 'Webinar - Step 1' }
+      { name: 'trigger_formulario', value: 'Step 1' }
     ];
 
     Object.keys(lead.utms).forEach(function (key) {

@@ -84,7 +84,7 @@
       { name: 'email', value: d.email || '' },
       { name: 'phone', value: d.phone || '' },
       { name: 'faturamento_medio_mensal', value: d.faturamento_mensal || '' },
-      { name: 'trigger_formulario', value: 'BPO - Step 1' }
+      { name: 'trigger_formulario', value: 'Step 1' }
     ];
 
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (key) {
