@@ -1688,4 +1688,148 @@ select.form-field:invalid {
   .qualifica .grafico-card {
     padding: 28px 20px 24px
   }
+
+  .clientes__stats {
+    grid-template-columns: 1fr
+  }
+}
+
+/* CLIENTES */
+.clientes {
+  padding: 88px 0 96px;
+  background: var(--roxo-claro);
+  overflow: hidden
+}
+
+.clientes__intro {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 32px
+}
+
+.clientes__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--roxo);
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 10px
+}
+
+.clientes__eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--roxo)
+}
+
+.clientes__intro h2 {
+  font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+  font-weight: 800
+}
+
+.clientes__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto 48px
+}
+
+.clientes__stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 22px
+}
+
+.clientes__stat > div {
+  flex: 1
+}
+
+.clientes__stat strong {
+  display: block;
+  color: var(--roxo);
+  font-size: 1.05rem;
+  font-weight: 800
+}
+
+.clientes__stat span {
+  display: block;
+  color: var(--cinza);
+  font-size: .88rem
+}
+
+.clientes__stat-arrow {
+  flex-shrink: 0
+}
+
+.clientes__marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent)
+}
+
+.clientes__row {
+  overflow: hidden
+}
+
+.clientes__track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: clientes-left 46s linear infinite
+}
+
+.clientes__row--right .clientes__track {
+  animation-name: clientes-right
+}
+
+.clientes__logo {
+  flex: 0 0 auto;
+  width: 84px;
+  height: 84px;
+  border-radius: 12px;
+  overflow: hidden
+}
+
+.clientes__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block
+}
+
+@keyframes clientes-left {
+  from {
+    transform: translateX(0)
+  }
+
+  to {
+    transform: translateX(-50%)
+  }
+}
+
+@keyframes clientes-right {
+  from {
+    transform: translateX(-50%)
+  }
+
+  to {
+    transform: translateX(0)
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clientes__track {
+    animation: none
+  }
 }
